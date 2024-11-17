@@ -20,10 +20,13 @@ export default defineSchema({
   }),
   winners: defineTable({
     eventId: v.id("events"),
+    memberId: v.id("users"),
     winnerPosition: v.number(),
   }),
   events: defineTable({
     eventName: v.string(),
+    eventImage: v.string(),
+    eventRules: v.array(v.string()),
   })
 });
 

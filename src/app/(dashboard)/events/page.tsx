@@ -68,7 +68,7 @@ const EventsPage = () => {
                 )}
               </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="w-[80%]">
             <DialogHeader>
               <DialogTitle>Create Event</DialogTitle>
               <DialogDescription></DialogDescription>

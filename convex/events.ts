@@ -8,6 +8,8 @@ export const createEvent = mutation({
     handler: async (ctx, args) => {
       const eventId = await ctx.db.insert("events", {
         eventName: args.eventName,
+        eventImage: "",
+        eventRules: []
       });
   
       // cookieStore.set({
@@ -31,3 +33,16 @@ export const getEvents = query({
     return events
   }
 })
+
+export const getEventById = query({
+  args: {
+    eventId: v.id("events"),
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db.get(args.eventId)
+
+    if (!user) return;
+
+    return user;
+  },
+});
