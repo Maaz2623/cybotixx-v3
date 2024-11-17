@@ -14,32 +14,59 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useGetEventById } from "@/features/events/api/use-get-event-by-id";
-import { PlusCircleIcon } from "lucide-react";
+import { Check, PlusCircleIcon } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
 import Image from "next/image";
-import Overview from "./_components/overview";
-import Rules from "./_components/rules";
+import Rules from "./_components/rules/rules";
 import Winners from "./_components/winners";
-import Participants from "./_components/participants";
+import Participants from "./_components/participants/participants";
+import { cn } from "@/lib/utils";
+import { useCreateParticipant } from "@/features/participants/api/use-create-participant";
+import { Id } from "../../../../../convex/_generated/dataModel";
+import { useGetParticipantByMemberId } from "@/features/participants/api/use-get-participant-by-member-id";
 
 interface TabInterface {
   label: string;
   component: React.ReactNode;
+  isActive: boolean;
 }
 
 const EventIdPage = () => {
   const eventId = useEventId();
-  const { data: event } = useGetEventById({ eventId });
   const { userId } = useAuth();
+  const { data: event } = useGetEventById({ eventId });
   const { data: currentUser } = useGetUserByClerkId({
     clerkId: userId as string,
   });
+  const { mutate, isPending } = useCreateParticipant();
+  const [tabActive, setTabActive] = useState("Rules");
 
   const [rules, setRules] = useState<Array<string>>(
     event?.eventRules.reverse() || []
   );
   const [newRule, setNewRule] = useState("");
+
+  const { data: participant } = useGetParticipantByMemberId({
+    convex_user_id: currentUser?._id as Id<"users">,
+  });
+
+  if (!event) return;
+  if (!currentUser) return;
+
+  const participate = () => {
+    mutate(
+      {
+        eventId: eventId as Id<"events">,
+        memberId: currentUser?._id as Id<"users">,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Participation Successful");
+        },
+      }
+    );
+  };
 
   const addRule = () => {
     setRules([...rules, newRule]);
@@ -47,31 +74,28 @@ const EventIdPage = () => {
     setNewRule("");
   };
 
-  if (!event) return;
-
   console.log(rules);
 
   const tabs: TabInterface[] = [
     {
-      label: "Overview",
-      component: <Overview />,
-    },
-    {
       label: "Rules",
-      component: <Rules />,
+      component: <Rules eventId={eventId} />,
+      isActive: tabActive === "Rules",
     },
     {
       label: "Participants",
       component: <Participants />,
+      isActive: tabActive === "Participants",
     },
     {
       label: "Winners",
       component: <Winners />,
+      isActive: tabActive === "Winners",
     },
   ];
 
   return (
-    <div className="w-full p-4 space-y-4">
+    <div className="w-full p-4 space-y-4 md:flex flex-col justify-center items-center">
       {(currentUser?.roleType === "SUPER_ADMIN" ||
         currentUser?.roleType === "ADMIN") && (
         <div className="flex w-full items-center justify-end">
@@ -166,9 +190,9 @@ const EventIdPage = () => {
           </Dialog>
         </div>
       )}
-      <div className="border p-2 space-y-4">
+      <div className="p-2 space-y-4 border md:w-[80%]">
         <div className="w-full flex justify-center items-center">
-          <div className="aspect-video w-full md:w-[400px] rounded-lg border overflow-hidden relative">
+          <div className="aspect-video w-full md:w-full rounded-lg border overflow-hidden relative">
             <Image
               src={event?.eventImage}
               alt="image"
@@ -179,21 +203,48 @@ const EventIdPage = () => {
             />
           </div>
         </div>
+        <div className="border w-full px-4 h-14 flex justify-between items-center">
+          <p className="text-xl md:text-3xl font-semibold">{event.eventName}</p>
+          <Button
+            onClick={participate}
+            type="submit"
+            disabled={!!participant || isPending}
+            className="h-8 text-xs md:text-sm w-[80px] md:w-[100px] bg-primary/50 hover:bg-primary/70 border-green-600 border text-white"
+          >
+            {participant && <Check className="size-4 text-green-200" />}
+            {!participant && "Participate"}
+          </Button>
+        </div>
         <div className="w-full flex justify-center items-center">
-          <div className="flex gap-x-2 overflow-auto">
+          <div className="flex overflow-auto py-3 scroll-smooth">
             {tabs.map((tab) => {
               return (
-                <p
-                  className="bg-free/10 px-2 w-[150px] bg-primary/50 hover:bg-primary/70 border-green-600 border text-white rounded-sm text-xs text-center md:text-base cursor-pointer py-1"
+                <div
+                  onClick={() => setTabActive(tab.label)}
+                  className="w-[150px] cursor-pointer text-center"
                   key={tab.label}
                 >
-                  {tab.label}
-                </p>
+                  <p
+                    className={cn(
+                      "px-2 py-1 w-full text-sm border-b md:text-base transition-transform transform duration-300",
+                      tab.isActive && "border-b-green-500"
+                    )}
+                  >
+                    {tab.label}
+                  </p>
+                </div>
               );
             })}
           </div>
         </div>
       </div>
+      {tabs.map((tab) => {
+        return (
+          <div key={tab.label} className={cn("hidden", tab.isActive && "flex")}>
+            {tab.component}
+          </div>
+        );
+      })}
     </div>
   );
 };

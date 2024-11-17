@@ -247,11 +247,6 @@ const ActionsCell = ({ convex_user_id }: { convex_user_id: Id<"users"> }) => {
 // Table Columns Definition
 export const columns: ColumnDef<Member>[] = [
   {
-    accessorKey: "registerNumber",
-    header: "",
-    cell: () => null,
-  },
-  {
     accessorKey: "image",
     header: "Image",
     cell: ({ row }) => {

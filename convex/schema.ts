@@ -16,7 +16,7 @@ export default defineSchema({
   }),
   participants: defineTable({
     eventId: v.id("events"),
-    participantId: v.id("users")
+    memberId: v.id("users"),
   }),
   winners: defineTable({
     eventId: v.id("events"),
@@ -27,7 +27,5 @@ export default defineSchema({
     eventName: v.string(),
     eventImage: v.string(),
     eventRules: v.array(v.string()),
-  })
+  }),
 });
-
-
