@@ -8,7 +8,7 @@ const Rules = ({ eventId }: { eventId: string }) => {
   });
 
   return (
-    <div className="w-full border p-3 md:text-base text-sm">
+    <div className="w-full min-h-[calc(screen-20%)] border p-3 md:text-base text-sm">
       {event?.eventRules.map((rule) => {
         return (
           <div key={rule} className="flex gap-2 justify-start items-center">

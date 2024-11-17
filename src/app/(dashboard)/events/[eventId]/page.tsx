@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useGetEventById } from "@/features/events/api/use-get-event-by-id";
-import { Check, PlusCircleIcon } from "lucide-react";
+import { Check, LoaderIcon, PlusCircleIcon } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
 import Image from "next/image";
@@ -51,8 +51,13 @@ const EventIdPage = () => {
     convex_user_id: currentUser?._id as Id<"users">,
   });
 
-  if (!event) return;
-  if (!currentUser) return;
+  if (!event || !currentUser) {
+    return (
+      <div className="h-64 flex justify-center items-center w-full">
+        <LoaderIcon className="size-8 animate-spin text-green-500" />
+      </div>
+    );
+  }
 
   const participate = () => {
     mutate(
@@ -84,7 +89,7 @@ const EventIdPage = () => {
     },
     {
       label: "Participants",
-      component: <Participants />,
+      component: <Participants eventId={event._id} />,
       isActive: tabActive === "Participants",
     },
     {
@@ -240,7 +245,13 @@ const EventIdPage = () => {
       </div>
       {tabs.map((tab) => {
         return (
-          <div key={tab.label} className={cn("hidden", tab.isActive && "flex")}>
+          <div
+            key={tab.label}
+            className={cn(
+              "hidden",
+              tab.isActive && "flex w-full justify-center items-center"
+            )}
+          >
             {tab.component}
           </div>
         );

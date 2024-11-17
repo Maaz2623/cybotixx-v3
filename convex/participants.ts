@@ -26,7 +26,7 @@ export const createParticipant = mutation({
 
 export const getParticipantByMemberId = query({
   args: {
-    convex_user_id: v.id("users"),
+    convex_user_id: v.optional(v.id("users")),
   },
   handler: async (ctx, args) => {
     const participant = await ctx.db
@@ -37,5 +37,31 @@ export const getParticipantByMemberId = query({
     if (!participant) return;
 
     return participant;
+  },
+});
+
+export const getParticipants = query({
+  args: {
+    eventId: v.id("events"),
+  },
+  handler: async (ctx, args) => {
+    const participants = await ctx.db
+      .query("participants")
+      .filter((q) => q.eq(q.field("eventId"), args.eventId))
+      .collect();
+    if (!participants) return;
+
+    const memberIds = participants.map((member) => member.memberId);
+
+    const members = await Promise.all(
+      memberIds.map((id) =>
+        ctx.db
+          .query("users")
+          .filter((q) => q.eq(q.field("_id"), id))
+          .first()
+      )
+    );
+
+    return members;
   },
 });
