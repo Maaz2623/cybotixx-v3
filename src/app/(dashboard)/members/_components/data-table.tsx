@@ -44,7 +44,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="w-full p-2">
+      <div className="w-full py-2">
         <Input
           placeholder="Search members..."
           value={

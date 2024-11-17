@@ -49,7 +49,6 @@ export type Member = {
     | "CORE_MEMBER"
     | "MEMBER"
     | "BANNED";
-  registerNumber: string;
 };
 
 // Actions Column Wrapper Component

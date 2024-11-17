@@ -22,7 +22,7 @@ const EventsPage = () => {
   const { userId } = useAuth();
 
   const [name, setName] = useState("");
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -34,7 +34,7 @@ const EventsPage = () => {
   if (!currentUser) return null;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
     mutate(
       {
@@ -55,7 +55,19 @@ const EventsPage = () => {
       {(currentUser.roleType === "ADMIN" ||
         currentUser.roleType === "SUPER_ADMIN") && (
         <Dialog>
-          <DialogTrigger>Open</DialogTrigger>
+          <DialogTrigger className="w-full flex items-center justify-end">
+              <Button
+                disabled={loading}
+                type="submit"
+                className="mt-10 bg-primary/50 w-20 border border-green-600 cursor-pointer hover:bg-primary/80 flex justify-center items-center gap-2 z-10 text-white"
+              >
+                {loading ? (
+                  <LoaderIcon className="text-white size-4 animate-spin" />
+                ) : (
+                  "Create"
+                )}
+              </Button>
+          </DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Create Event</DialogTitle>
