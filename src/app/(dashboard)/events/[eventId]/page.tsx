@@ -17,6 +17,16 @@ import { useGetEventById } from "@/features/events/api/use-get-event-by-id";
 import { PlusCircleIcon } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
+import Image from "next/image";
+import Overview from "./_components/overview";
+import Rules from "./_components/rules";
+import Winners from "./_components/winners";
+import Participants from "./_components/participants";
+
+interface TabInterface {
+  label: string;
+  component: React.ReactNode;
+}
 
 const EventIdPage = () => {
   const eventId = useEventId();
@@ -37,8 +47,31 @@ const EventIdPage = () => {
     setNewRule("");
   };
 
+  if (!event) return;
+
+  console.log(rules);
+
+  const tabs: TabInterface[] = [
+    {
+      label: "Overview",
+      component: <Overview />,
+    },
+    {
+      label: "Rules",
+      component: <Rules />,
+    },
+    {
+      label: "Participants",
+      component: <Participants />,
+    },
+    {
+      label: "Winners",
+      component: <Winners />,
+    },
+  ];
+
   return (
-    <div className="w-full p-4">
+    <div className="w-full p-4 space-y-4">
       {(currentUser?.roleType === "SUPER_ADMIN" ||
         currentUser?.roleType === "ADMIN") && (
         <div className="flex w-full items-center justify-end">
@@ -133,7 +166,34 @@ const EventIdPage = () => {
           </Dialog>
         </div>
       )}
-      {eventId}
+      <div className="border p-2 space-y-4">
+        <div className="w-full flex justify-center items-center">
+          <div className="aspect-video w-full md:w-[400px] rounded-lg border overflow-hidden relative">
+            <Image
+              src={event?.eventImage}
+              alt="image"
+              // width={500}
+              // height={500}
+              fill
+              className=""
+            />
+          </div>
+        </div>
+        <div className="w-full flex justify-center items-center">
+          <div className="flex gap-x-2 overflow-auto">
+            {tabs.map((tab) => {
+              return (
+                <p
+                  className="bg-free/10 px-2 w-[150px] bg-primary/50 hover:bg-primary/70 border-green-600 border text-white rounded-sm text-xs text-center md:text-base cursor-pointer py-1"
+                  key={tab.label}
+                >
+                  {tab.label}
+                </p>
+              );
+            })}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

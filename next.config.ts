@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "img.clerk.com",
       },
+      {
+        hostname: "cloud.appwrite.io",
+      },
     ],
   },
 };
