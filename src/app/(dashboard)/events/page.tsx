@@ -17,11 +17,21 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { LoaderIcon } from "lucide-react";
 import { useCreateEvent } from "@/features/events/api/use-create-event";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 const EventsPage = () => {
   const { userId } = useAuth();
 
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
+  const [eventType, setEventType] = useState("");
+  const [eventTeamMaxMembers, setEventTeamMaxMembers] = useState(1);
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -46,6 +56,8 @@ const EventsPage = () => {
       {
         eventName: name,
         eventDate: date,
+        eventType: eventType,
+        eventTeamMaxMembers: eventTeamMaxMembers,
       },
       {
         onSuccess(data) {
@@ -99,8 +111,30 @@ const EventsPage = () => {
                 className="w-full"
                 placeholder="DD/MM/YYYY"
                 onChange={(e) => setDate(e.target.value)}
-              />
-
+              />{" "}
+              <div className="flex justify-start items-center gap-3">
+                <Select onValueChange={(e) => setEventType(e)}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Event Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="individual">Individual</SelectItem>
+                    <SelectItem value="team">Team</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Input
+                  minLength={1}
+                  max={50}
+                  disabled={eventType !== "team"}
+                  required
+                  className="w-[150px]"
+                  placeholder="Max Members"
+                  type="number"
+                  onChange={(e) => {
+                    setEventTeamMaxMembers(parseInt(e.target.value));
+                  }}
+                />
+              </div>
               <div className="w-full flex justify-end items-center">
                 <Button
                   disabled={loading}

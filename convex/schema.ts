@@ -28,5 +28,12 @@ export default defineSchema({
     eventImage: v.string(),
     eventRules: v.array(v.string()),
     eventDate: v.string(),
+    eventType: v.string(),
+    eventTeamMaxMembers: v.number(),
+  }),
+  slots: defineTable({
+    slotMembers: v.array(v.id("users")),
+    eventId: v.id("events"),
+    slotNumber: v.number(),
   }),
 });

@@ -15,6 +15,7 @@ import type {
 } from "convex/server";
 import type * as events from "../events.js";
 import type * as participants from "../participants.js";
+import type * as slots from "../slots.js";
 import type * as users from "../users.js";
 import type * as winners from "../winners.js";
 
@@ -29,6 +30,7 @@ import type * as winners from "../winners.js";
 declare const fullApi: ApiFromModules<{
   events: typeof events;
   participants: typeof participants;
+  slots: typeof slots;
   users: typeof users;
   winners: typeof winners;
 }>;

@@ -5,6 +5,8 @@ export const createEvent = mutation({
   args: {
     eventName: v.string(),
     eventDate: v.string(),
+    eventType: v.string(),
+    eventTeamMaxMembers: v.number(),
   },
   handler: async (ctx, args) => {
     const eventId = await ctx.db.insert("events", {
@@ -12,8 +14,17 @@ export const createEvent = mutation({
       eventImage: "",
       eventRules: [],
       eventDate: args.eventDate,
+      eventType: args.eventType,
+      eventTeamMaxMembers: args.eventTeamMaxMembers,
     });
 
+    Array.from({ length: 50 }, (_, index) =>
+      ctx.db.insert("slots", {
+        slotMembers: [],
+        slotNumber: index + 1,
+        eventId: eventId,
+      })
+    );
     // cookieStore.set({
     //   name: "convex_user_id",
     //   value: userId,
@@ -40,10 +51,10 @@ export const getEventById = query({
     eventId: v.id("events"),
   },
   handler: async (ctx, args) => {
-    const user = await ctx.db.get(args.eventId);
+    const event = await ctx.db.get(args.eventId);
 
-    if (!user) return;
+    if (!event) return;
 
-    return user;
+    return event;
   },
 });

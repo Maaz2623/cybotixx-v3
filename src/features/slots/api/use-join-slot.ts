@@ -1,16 +1,15 @@
 import { useCallback, useMemo, useState } from "react";
-import { useMutation } from "convex/react";
 import { Id } from "../../../../convex/_generated/dataModel";
+import { useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 
 type RequestType = {
-  eventName: string;
-  eventDate: string;
-  eventType: string;
-  eventTeamMaxMembers: number;
+  memberId: Id<"users">;
+  eventId: Id<"events">;
+  slotNumber: number;
 };
 
-type ResponseType = Id<"events"> | null;
+type ResponseType = Id<"slots"> | null;
 
 type Options = {
   onSuccess?: (data: ResponseType) => void;
@@ -19,7 +18,7 @@ type Options = {
   throwError?: boolean;
 };
 
-export const useCreateEvent = () => {
+export const useJoinSlot = () => {
   const [data] = useState<ResponseType>(null);
   const [error] = useState<Error | null>(null);
   const [status, setStatus] = useState<
@@ -31,7 +30,7 @@ export const useCreateEvent = () => {
   const isSettled = useMemo(() => status === "settled", [status]);
   const isError = useMemo(() => status === "error", [status]);
 
-  const mutation = useMutation(api.events.createEvent);
+  const mutation = useMutation(api.slots.joinSlot);
 
   const mutate = useCallback(
     async (values: RequestType, options?: Options) => {

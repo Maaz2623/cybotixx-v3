@@ -25,6 +25,8 @@ import { cn } from "@/lib/utils";
 import { useCreateParticipant } from "@/features/participants/api/use-create-participant";
 import { Id } from "../../../../../convex/_generated/dataModel";
 import { useGetParticipantByMemberId } from "@/features/participants/api/use-get-participant-by-member-id";
+import Teams from "./_components/teams/teams";
+import TeamSlots from "./_components/teams/team-slots";
 
 interface TabInterface {
   label: string;
@@ -85,6 +87,11 @@ const EventIdPage = () => {
       label: "Rules",
       component: <Rules eventId={eventId} />,
       isActive: tabActive === "Rules",
+    },
+    {
+      label: "Teams",
+      component: <Teams eventId={event._id} />,
+      isActive: tabActive === "Teams",
     },
     {
       label: "Participants",
@@ -215,15 +222,42 @@ const EventIdPage = () => {
         </div>
         <div className="w-full px-4 h-14 flex justify-between items-center">
           <p className="text-xl md:text-3xl font-semibold">{event.eventName}</p>
-          <Button
-            onClick={participate}
-            type="submit"
-            disabled={!!participant || isPending}
-            className="h-8 text-xs md:text-sm w-[80px] md:w-[100px] bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
-          >
-            {participant && <Check className="size-4 text-blue-200" />}
-            {!participant && "Participate"}
-          </Button>
+          {event.eventType === "individual" && (
+            <Button
+              onClick={participate}
+              type="submit"
+              disabled={!!participant || isPending}
+              className="h-8 text-xs md:text-sm w-[80px] md:w-[100px] bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
+            >
+              {participant && <Check className="size-4 text-blue-200" />}
+              {!participant && "Participate"}
+            </Button>
+          )}
+          {event.eventType === "team" && (
+            // <Dialog>
+            //   <DialogTrigger asChild>
+            //     <Button
+            //       disabled={!!participant || isPending}
+            //       className="h-8 text-xs md:text-sm w-[80px] md:w-[100px] bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
+            //     >
+            //       {participant && (
+            //         <div className="flex items-center px-2 gap-1">
+            //           <Check className="size-4 text-blue-200" />
+            //           <p className="text-xs">Joined</p>
+            //         </div>
+            //       )}
+            //       {!participant && "Participate"}
+            //     </Button>
+            //   </DialogTrigger>
+            //   <DialogContent className="w-[90%] rounded-lg">
+            //     <DialogHeader>
+            //       <DialogTitle>Join a Team</DialogTitle>
+            //     </DialogHeader>
+            //     <TeamSlots />
+            //   </DialogContent>
+            // </Dialog>
+            <TeamSlots />
+          )}
         </div>
         <div className="w-full flex justify-center items-center">
           <div className="flex overflow-auto py-3 scroll-smooth">
