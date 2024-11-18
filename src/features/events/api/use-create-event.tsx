@@ -5,6 +5,7 @@ import { api } from "../../../../convex/_generated/api";
 
 type RequestType = {
   eventName: string;
+  eventDate: string;
 };
 
 type ResponseType = Id<"events"> | null;

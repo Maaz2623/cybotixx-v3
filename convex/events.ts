@@ -2,44 +2,45 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
 export const createEvent = mutation({
-    args: {
-      eventName: v.string(),
-    },
-    handler: async (ctx, args) => {
-      const eventId = await ctx.db.insert("events", {
-        eventName: args.eventName,
-        eventImage: "",
-        eventRules: []
-      });
-  
-      // cookieStore.set({
-      //   name: "convex_user_id",
-      //   value: userId,
-      //   httpOnly: true,
-      //   path: "/",
-      //   maxAge: 60 * 60 * 24 * 7, // 7 days
-      // });
-  
-      return eventId;
-    },
-  });
+  args: {
+    eventName: v.string(),
+    eventDate: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const eventId = await ctx.db.insert("events", {
+      eventName: args.eventName,
+      eventImage: "",
+      eventRules: [],
+      eventDate: args.eventDate,
+    });
+
+    // cookieStore.set({
+    //   name: "convex_user_id",
+    //   value: userId,
+    //   httpOnly: true,
+    //   path: "/",
+    //   maxAge: 60 * 60 * 24 * 7, // 7 days
+    // });
+
+    return eventId;
+  },
+});
 
 export const getEvents = query({
   args: {},
   handler: async (ctx) => {
-    const events = await ctx.db.query("events").order("desc").collect()
+    const events = await ctx.db.query("events").order("desc").collect();
 
-
-    return events
-  }
-})
+    return events;
+  },
+});
 
 export const getEventById = query({
   args: {
     eventId: v.id("events"),
   },
   handler: async (ctx, args) => {
-    const user = await ctx.db.get(args.eventId)
+    const user = await ctx.db.get(args.eventId);
 
     if (!user) return;
 

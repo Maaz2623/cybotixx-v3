@@ -196,9 +196,9 @@ const EventIdPage = () => {
           </Dialog>
         </div>
       )}
-      <div className="p-2 space-y-4 border md:w-[80%]">
+      <div className="p-2 space-y-4 md:w-[80%]">
         <div className="w-full flex justify-center items-center">
-          <div className="aspect-video w-full md:w-full rounded-lg border overflow-hidden relative">
+          <div className="aspect-video w-full md:w-full rounded-lg overflow-hidden relative">
             {event.eventImage !== "" ? (
               <Image
                 src={event?.eventImage}
@@ -215,7 +215,7 @@ const EventIdPage = () => {
             )}
           </div>
         </div>
-        <div className="border w-full px-4 h-14 flex justify-between items-center">
+        <div className="w-full px-4 h-14 flex justify-between items-center">
           <p className="text-xl md:text-3xl font-semibold">{event.eventName}</p>
           <Button
             onClick={participate}

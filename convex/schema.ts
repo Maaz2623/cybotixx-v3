@@ -27,5 +27,6 @@ export default defineSchema({
     eventName: v.string(),
     eventImage: v.string(),
     eventRules: v.array(v.string()),
+    eventDate: v.string(),
   }),
 });

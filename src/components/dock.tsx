@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { Calendar, Images, LucideIcon, User, Users } from "lucide-react";
+import { Calendar, LucideIcon, User, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -28,12 +28,12 @@ const Dock = () => {
       disabled: false,
       url: "/events",
     },
-    {
-      label: "Gallery",
-      icon: Images,
-      disabled: false,
-      url: "/gallery",
-    },
+    // {
+    //   label: "Gallery",
+    //   icon: Images,
+    //   disabled: false,
+    //   url: "/gallery",
+    // },
     {
       label: "Members",
       icon: Users,
@@ -82,7 +82,7 @@ const Dock = () => {
     >
       <div
         className={cn(
-          "border flex justify-center items-center rounded-lg relative bg-white/5 backdrop-blur-md h-full w-fit max-w-full transition-transform duration-300 ease-in-out transform md:max-w-1/3",
+          "border flex justify-center items-center rounded-lg relative bg-black/90 backdrop-blur-sm h-full w-fit max-w-full transition-transform duration-300 ease-in-out transform md:max-w-1/3",
           visible ? "translate-y-0" : "translate-y-full"
         )}
       >

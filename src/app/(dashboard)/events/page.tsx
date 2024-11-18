@@ -17,11 +17,11 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { LoaderIcon } from "lucide-react";
 import { useCreateEvent } from "@/features/events/api/use-create-event";
-
 const EventsPage = () => {
   const { userId } = useAuth();
 
   const [name, setName] = useState("");
+  const [date, setDate] = useState("");
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -39,6 +39,7 @@ const EventsPage = () => {
     mutate(
       {
         eventName: name,
+        eventDate: date,
       },
       {
         onSuccess(data) {
@@ -51,7 +52,7 @@ const EventsPage = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col justify-center items-center">
       {(currentUser.roleType === "ADMIN" ||
         currentUser.roleType === "SUPER_ADMIN") && (
         <Dialog>
@@ -85,6 +86,15 @@ const EventsPage = () => {
                 placeholder="Event Name"
                 onChange={(e) => setName(e.target.value)}
               />
+              <Input
+                minLength={1}
+                max={50}
+                required
+                className="w-full"
+                placeholder="DD/MM/YYYY"
+                onChange={(e) => setDate(e.target.value)}
+              />
+
               <div className="w-full flex justify-end items-center">
                 <Button
                   disabled={loading}
@@ -103,7 +113,7 @@ const EventsPage = () => {
         </Dialog>
       )}
       <EventContainer />
-    </>
+    </div>
   );
 };
 
