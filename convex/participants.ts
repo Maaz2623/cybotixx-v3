@@ -12,6 +12,16 @@ export const createParticipant = mutation({
       eventId: args.eventId,
     });
 
+    const member = await ctx.db.get(args.memberId);
+
+    if (!member) return;
+
+    const updatedParticipations = member.participations + 1;
+
+    await ctx.db.patch(member._id, {
+      participations: updatedParticipations,
+    });
+
     // cookieStore.set({
     //   name: "convex_user_id",
     //   value: userId,

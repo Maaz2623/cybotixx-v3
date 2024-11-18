@@ -14,6 +14,16 @@ export const announceWinner = mutation({
       winnerPosition: args.winnerPosition,
     });
 
+    const member = await ctx.db.get(args.memberId);
+
+    if (!member) return;
+
+    const updatedPrizesWon = member.prizesWon + 1;
+
+    await ctx.db.patch(member._id, {
+      prizesWon: updatedPrizesWon,
+    });
+
     // cookieStore.set({
     //   name: "convex_user_id",
     //   value: userId,
