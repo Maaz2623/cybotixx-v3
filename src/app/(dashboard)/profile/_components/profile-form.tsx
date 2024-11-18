@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense } from "react";
+import React from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -20,10 +20,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useCreateUser } from "@/features/users/api/use-create-user";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { LoaderIcon } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
 
 const formSchema = z.object({
@@ -33,6 +29,9 @@ const formSchema = z.object({
   courseYear: z.string().min(1),
   phoneNumber: z.string().min(1).max(10),
   clerkId: z.string(),
+  clerkImageUrl: z.string().optional(),
+  prizesWon: z.number().optional(),
+  participations: z.number().optional(),
 });
 
 interface ProfileFormProps {
@@ -42,6 +41,9 @@ interface ProfileFormProps {
   courseYear: string;
   phoneNumber: string;
   clerkId: string;
+  clerkImageUrl?: string;
+  prizesWon?: number;
+  participations?: number;
 }
 
 const ProfileForm = ({
@@ -51,10 +53,10 @@ const ProfileForm = ({
   courseYear,
   phoneNumber,
   clerkId,
+  clerkImageUrl,
+  prizesWon,
+  participations,
 }: ProfileFormProps) => {
-  const { mutate, isPending } = useCreateUser();
-  const router = useRouter();
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -64,17 +66,15 @@ const ProfileForm = ({
       courseYear,
       phoneNumber,
       clerkId,
+      clerkImageUrl,
+      prizesWon,
+      participations,
     },
   });
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    mutate(values, {
-      onSuccess() {
-        toast.success("Successfully");
-        router.push("/profile");
-      },
-    });
+    console.log(values);
   }
 
   return (
@@ -196,11 +196,7 @@ const ProfileForm = ({
             disabled
             className="w-full bg-primary/50 hover:bg-primary/70 border-green-600 border text-white"
           >
-            {isPending ? (
-              <LoaderIcon className="text-white size-4 animate-spin" />
-            ) : (
-              "Save"
-            )}
+            Save
           </Button>
         </form>
       </Form>

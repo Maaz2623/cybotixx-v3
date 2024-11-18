@@ -47,22 +47,6 @@ export const createUser = mutation({
   },
 });
 
-export const getUserByClerkId = query({
-  args: {
-    clerkId: v.string(),
-  },
-  handler: async (ctx, args) => {
-    const user = await ctx.db
-      .query("users")
-      .filter((q) => q.eq(q.field("clerkId"), args.clerkId))
-      .first();
-
-    if (!user) return;
-
-    return user;
-  },
-});
-
 export const getMembers = query({
   args: {},
   handler: async (ctx) => {
