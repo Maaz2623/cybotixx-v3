@@ -57,7 +57,7 @@ const OnboardingForm = ({ userId }: { userId: string }) => {
       courseYear: "",
       phoneNumber: "",
       clerkId: userId as string,
-      clerkImageUrl: "",
+      clerkImageUrl: userImageUrl as string,
     },
   });
 
@@ -98,10 +98,14 @@ const OnboardingForm = ({ userId }: { userId: string }) => {
   }
 
   const handleCheck = () => {
+    if (!checked) {
+      setCheck(true);
+      console.log("disabled");
+    }
     if (checked) {
       setCheck(false);
+      console.log("enabled");
     }
-    setCheck(true);
   };
 
   return (
@@ -214,13 +218,17 @@ const OnboardingForm = ({ userId }: { userId: string }) => {
             )}
           />
           <div className="flex justify-start items-center gap-2">
-            <Checkbox checked={checked} onCheckedChange={handleCheck} />
+            <Checkbox
+              className="size-5"
+              checked={checked}
+              onCheckedChange={handleCheck}
+            />
             <p>I agree to have provided the correct information.</p>
           </div>
           <Button
             type="submit"
             className="w-full bg-primary/50 hover:bg-primary/70 border-green-600 border text-white"
-            disabled={true}
+            disabled={!checked}
           >
             {isPending ? (
               <LoaderIcon className="text-white size-4 animate-spin" />

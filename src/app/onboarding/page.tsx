@@ -10,11 +10,11 @@ import { useRouter } from "next/navigation";
 const OnboardingPage = () => {
   const { userId } = useAuth();
 
+  const router = useRouter();
+
   const { data, isLoading } = useGetUserByClerkId({
     clerkId: userId as string,
   });
-
-  const router = useRouter();
 
   if (isLoading) {
     return (
@@ -23,20 +23,22 @@ const OnboardingPage = () => {
       </div>
     );
   }
+  
+  if (!userId) {
+    return null;
+  }
 
   if (data) {
     Cookies.set("convex_user_id", data._id, {
       expires: 7,
       path: "/",
     });
-
-    return router.replace("/events"); // Redirect if user data is found
+    router.replace("/events");
   }
 
-  if (!userId) {
-    return router.replace("/sign-in");
+  if (data) {
+    return null;
   }
-
   // Render onboarding form if no user data exists
   return (
     <div className="w-full flex justify-center items-center">
