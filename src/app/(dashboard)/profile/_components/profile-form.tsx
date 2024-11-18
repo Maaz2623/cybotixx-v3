@@ -41,9 +41,9 @@ interface ProfileFormProps {
   courseYear: string;
   phoneNumber: string;
   clerkId: string;
-  clerkImageUrl?: string;
-  prizesWon?: number;
-  participations?: number;
+  clerkImageUrl: string;
+  prizesWon: number;
+  participations: number;
 }
 
 const ProfileForm = ({
