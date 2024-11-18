@@ -11,7 +11,12 @@ const Winners = ({ eventId }: { eventId: string }) => {
 
   if (!winners) return null;
 
-  if (winners.length === 0) return;
+  if (winners.length === 0)
+    return (
+      <div className="h-40 flex justify-center items-center">
+        <p>Winners not accounced yet</p>
+      </div>
+    );
 
   const formattedMembers: Winner[] = winners
     .filter(
@@ -27,7 +32,7 @@ const Winners = ({ eventId }: { eventId: string }) => {
     }));
 
   return (
-    <div className="w-full">
+    <div className="w-full min-h-screen">
       <DataTable data={formattedMembers} columns={columns} />
     </div>
   );

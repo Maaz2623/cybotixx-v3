@@ -32,7 +32,7 @@ const Participants = ({ eventId }: { eventId: string }) => {
     }));
 
   return (
-    <div className="w-full">
+    <div className="w-full min-h-screen">
       <DataTable data={formattedParticipants} columns={columns} />
     </div>
   );

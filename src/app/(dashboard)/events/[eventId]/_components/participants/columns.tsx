@@ -201,32 +201,31 @@ const ActionsCell = ({ convex_user_id }: { convex_user_id: Id<"users"> }) => {
           </DialogTrigger>
 
           {(currentUser.roleType === "SUPER_ADMIN" ||
-            currentUser.roleType === "ADMIN") &&
-            member.roleType !== "SUPER_ADMIN" && (
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel>Winner</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={() => announceWinner({ winnerPosition: 1 })}
-                >
-                  <Medal className="text-green-500" />
-                  Announce 1st
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => announceWinner({ winnerPosition: 1 })}
-                >
-                  <Medal className="text-orange-500" />
-                  Announce 2nd
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => announceWinner({ winnerPosition: 1 })}
-                >
-                  <Medal className="text-blue-500" />
-                  Announce 3rd
-                </DropdownMenuItem>
-              </>
-            )}
+            currentUser.roleType === "ADMIN") && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel>Winner</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => announceWinner({ winnerPosition: 1 })}
+              >
+                <Medal className="text-green-500" />
+                Announce 1st
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => announceWinner({ winnerPosition: 1 })}
+              >
+                <Medal className="text-orange-500" />
+                Announce 2nd
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => announceWinner({ winnerPosition: 1 })}
+              >
+                <Medal className="text-blue-500" />
+                Announce 3rd
+              </DropdownMenuItem>
+            </>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
       <MemberCard convex_user_id={convex_user_id} />

@@ -48,7 +48,7 @@ const EventContainer = () => {
                 <h2 className="text-2xl font-medium">{event.eventName}</h2>
                 <p
                   className={cn(
-                    "border  rounded-md py-1 text-xs px-2",
+                    "border md:hidden rounded-md py-1 text-xs px-2",
                     isBefore(eventDateObject, currentDate) &&
                       "bg-green-500/50 border-green-500",
                     isAfter(eventDateObject, currentDate) &&
@@ -62,6 +62,19 @@ const EventContainer = () => {
               </div>
               <p className="text-xs rounded-md border w-fit px-2 py-1 bg-white/10 mt-3">
                 {eventDate}
+              </p>
+              <p
+                className={cn(
+                  "border hidden md:flex w-fit mt-4 rounded-md py-1 text-xs px-2",
+                  isBefore(eventDateObject, currentDate) &&
+                    "bg-green-500/50 border-green-500",
+                  isAfter(eventDateObject, currentDate) &&
+                    "bg-gray-600/50 border-white"
+                )}
+              >
+                {isBefore(eventDateObject, currentDate) && "Upcoming"}
+                {isAfter(eventDateObject, currentDate) && "Completed"}
+                {isEqual(eventDateObject, currentDate) && "Ongoing"}
               </p>
             </div>
           </div>
