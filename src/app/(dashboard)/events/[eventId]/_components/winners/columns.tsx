@@ -2,9 +2,6 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import {
-  IdCard,
-  Medal,
-  MoreHorizontal,
   Shield,
   ShieldBan,
   ShieldCheck,
@@ -12,35 +9,10 @@ import {
   ShieldHalf,
   SwordsIcon,
 } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import Image from "next/image";
-import {
-  Dialog,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { toast } from "sonner";
-import { useGetMemberByConvexId } from "@/features/members/api/use-get-member-by-convex-id";
-import { useGetUserByClerkId } from "@/features/users/api/use-get-user";
-import { useAuth } from "@clerk/nextjs";
-import MemberCard from "@/app/(dashboard)/members/_components/member-card";
-import { Id } from "../../../../../../../convex/_generated/dataModel";
-import { useAnnounceWinner } from "@/features/winners/api/use-announce-winner";
-import { useEventId } from "@/features/events/hooks/use-event-id";
 
 // Define the Member type
-export type Member = {
+export type Winner = {
   convex_user_id: string;
   clerkImageUrl: string;
   fullName: string;
@@ -51,6 +23,7 @@ export type Member = {
     | "CORE_MEMBER"
     | "MEMBER"
     | "BANNED";
+  index: number;
 };
 
 // Actions Column Wrapper Component
@@ -148,94 +121,94 @@ export type Member = {
 //   );
 // };
 
-const ActionsCell = ({ convex_user_id }: { convex_user_id: Id<"users"> }) => {
-  const { userId } = useAuth();
-  const { data: currentUser } = useGetUserByClerkId({
-    clerkId: userId as string,
-  });
-  const { data: member } = useGetMemberByConvexId({ convex_user_id });
+// const ActionsCell = ({ convex_user_id }: { convex_user_id: Id<"users"> }) => {
+//   const { userId } = useAuth();
+//   const { data: currentUser } = useGetUserByClerkId({
+//     clerkId: userId as string,
+//   });
+//   const { data: member } = useGetMemberByConvexId({ convex_user_id });
 
-  const { mutate } = useAnnounceWinner();
+//   const { mutate } = useAnnounceWinner();
 
-  const eventId = useEventId();
+//   const eventId = useEventId();
 
-  const announceWinner = ({ winnerPosition }: { winnerPosition: number }) => {
-    mutate(
-      {
-        eventId: eventId,
-        winnerPosition: winnerPosition,
-        memberId: member?._id as Id<"users">,
-      },
-      {
-        onSuccess() {
-          toast.success(`Winner Announced`);
-        },
-      }
-    );
-  };
+//   const announceWinner = ({ winnerPosition }: { winnerPosition: number }) => {
+//     mutate(
+//       {
+//         eventId: eventId,
+//         winnerPosition: winnerPosition,
+//         memberId: member?._id as Id<"users">,
+//       },
+//       {
+//         onSuccess() {
+//           toast.success(`Winner Announced`);
+//         },
+//       }
+//     );
+//   };
 
-  if (!currentUser) return null;
+//   if (!currentUser) return null;
 
-  if (!member) return null;
+//   if (!member) return null;
 
-  return (
-    <Dialog>
-      <DialogHeader>
-        <DialogTitle>
-          <DialogDescription></DialogDescription>
-        </DialogTitle>
-      </DialogHeader>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DialogTrigger asChild>
-            <DropdownMenuItem>
-              <IdCard className="size-6" />
-              Show Card
-            </DropdownMenuItem>
-          </DialogTrigger>
+//   return (
+//     <Dialog>
+//       <DialogHeader>
+//         <DialogTitle>
+//           <DialogDescription></DialogDescription>
+//         </DialogTitle>
+//       </DialogHeader>
+//       <DropdownMenu>
+//         <DropdownMenuTrigger asChild>
+//           <Button variant="ghost" className="h-8 w-8 p-0">
+//             <span className="sr-only">Open menu</span>
+//             <MoreHorizontal className="h-4 w-4" />
+//           </Button>
+//         </DropdownMenuTrigger>
+//         <DropdownMenuContent align="end">
+//           <DialogTrigger asChild>
+//             <DropdownMenuItem>
+//               <IdCard className="size-6" />
+//               Show Card
+//             </DropdownMenuItem>
+//           </DialogTrigger>
 
-          {(currentUser.roleType === "SUPER_ADMIN" ||
-            currentUser.roleType === "ADMIN") &&
-            member.roleType !== "SUPER_ADMIN" && (
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel>Winner</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={() => announceWinner({ winnerPosition: 1 })}
-                >
-                  <Medal className="text-green-500" />
-                  Announce 1st
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => announceWinner({ winnerPosition: 1 })}
-                >
-                  <Medal className="text-orange-500" />
-                  Announce 2nd
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => announceWinner({ winnerPosition: 1 })}
-                >
-                  <Medal className="text-blue-500" />
-                  Announce 3rd
-                </DropdownMenuItem>
-              </>
-            )}
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <MemberCard convex_user_id={convex_user_id} />
-    </Dialog>
-  );
-};
+//           {(currentUser.roleType === "SUPER_ADMIN" ||
+//             currentUser.roleType === "ADMIN") &&
+//             member.roleType !== "SUPER_ADMIN" && (
+//               <>
+//                 <DropdownMenuSeparator />
+//                 <DropdownMenuLabel>Winner</DropdownMenuLabel>
+//                 <DropdownMenuSeparator />
+//                 <DropdownMenuItem
+//                   onClick={() => announceWinner({ winnerPosition: 1 })}
+//                 >
+//                   <Medal className="text-green-500" />
+//                   Announce 1st
+//                 </DropdownMenuItem>
+//                 <DropdownMenuItem
+//                   onClick={() => announceWinner({ winnerPosition: 1 })}
+//                 >
+//                   <Medal className="text-orange-500" />
+//                   Announce 2nd
+//                 </DropdownMenuItem>
+//                 <DropdownMenuItem
+//                   onClick={() => announceWinner({ winnerPosition: 1 })}
+//                 >
+//                   <Medal className="text-blue-500" />
+//                   Announce 3rd
+//                 </DropdownMenuItem>
+//               </>
+//             )}
+//         </DropdownMenuContent>
+//       </DropdownMenu>
+//       <MemberCard convex_user_id={convex_user_id} />
+//     </Dialog>
+//   );
+// };
 
 // Table Columns Definition
-export const columns: ColumnDef<Member>[] = [
+export const columns: ColumnDef<Winner>[] = [
   {
     accessorKey: "image",
     header: "Image",
@@ -286,11 +259,18 @@ export const columns: ColumnDef<Member>[] = [
     },
   },
   {
-    id: "actions",
-    header: "Actions",
+    accessorKey: "index",
+    header: "Position",
     cell: ({ row }) => {
-      const convex_user_id = row.original.convex_user_id as Id<"users">;
-      return <ActionsCell convex_user_id={convex_user_id} />;
+      const position = row.original.index + 1;
+
+      return (
+        <div>
+          {position === 1 && "1st"}
+          {position === 2 && "2nd"}
+          {position === 3 && "3rd"}
+        </div>
+      );
     },
   },
 ];

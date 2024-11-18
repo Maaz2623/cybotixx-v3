@@ -16,6 +16,7 @@ import type {
 import type * as events from "../events.js";
 import type * as participants from "../participants.js";
 import type * as users from "../users.js";
+import type * as winners from "../winners.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -29,6 +30,7 @@ declare const fullApi: ApiFromModules<{
   events: typeof events;
   participants: typeof participants;
   users: typeof users;
+  winners: typeof winners;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

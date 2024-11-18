@@ -19,7 +19,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
 import Image from "next/image";
 import Rules from "./_components/rules/rules";
-import Winners from "./_components/winners";
+import Winners from "./_components/winners/winners";
 import Participants from "./_components/participants/participants";
 import { cn } from "@/lib/utils";
 import { useCreateParticipant } from "@/features/participants/api/use-create-participant";
@@ -95,7 +95,7 @@ const EventIdPage = () => {
     },
     {
       label: "Winners",
-      component: <Winners />,
+      component: <Winners eventId={event._id} />,
       isActive: tabActive === "Winners",
     },
   ];

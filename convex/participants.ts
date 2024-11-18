@@ -64,6 +64,6 @@ export const getParticipants = query({
       )
     );
 
-    return members;
+    return members.reverse();
   },
 });
