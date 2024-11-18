@@ -35,7 +35,7 @@ const EventsPage = () => {
   if (!currentUser)
     return (
       <div className="flex justify-center items-center h-40">
-        <LoaderIcon className="text-green-500 size-8 animate-spin" />
+        <LoaderIcon className="text-blue-500 size-8 animate-spin" />
       </div>
     );
 
@@ -69,7 +69,7 @@ const EventsPage = () => {
             <Button
               disabled={loading}
               type="submit"
-              className="mt-10 bg-primary/50 w-20 border border-green-600 cursor-pointer hover:bg-primary/80 flex justify-center items-center gap-2 z-10 text-white"
+              className="mt-10 bg-primary/50 w-20 border border-blue-600 cursor-pointer hover:bg-primary/80 flex justify-center items-center gap-2 z-10 text-white"
             >
               {loading ? (
                 <LoaderIcon className="text-white size-4 animate-spin" />
@@ -105,7 +105,7 @@ const EventsPage = () => {
                 <Button
                   disabled={loading}
                   type="submit"
-                  className="mt-10 bg-primary/50 w-20 border border-green-600 cursor-pointer hover:bg-primary/80 flex justify-center items-center gap-2 z-10 text-white"
+                  className="mt-10 bg-primary/50 w-20 border border-blue-600 cursor-pointer hover:bg-primary/80 flex justify-center items-center gap-2 z-10 text-white"
                 >
                   {loading ? (
                     <LoaderIcon className="text-white size-4 animate-spin" />

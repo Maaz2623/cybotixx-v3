@@ -99,7 +99,7 @@ export type Member = {
 //                     toast.success("Role assigned successfully");
 //                   }}
 //                 >
-//                   <ShieldHalf className="size-4 md:size-5 text-emerald-500 fill-green-500/20" />
+//                   <ShieldHalf className="size-4 md:size-5 text-emerald-500 fill-blue-500/20" />
 //                   Admin
 //                 </DropdownMenuItem>
 //               )}
@@ -209,19 +209,19 @@ const ActionsCell = ({ convex_user_id }: { convex_user_id: Id<"users"> }) => {
               <DropdownMenuItem
                 onClick={() => announceWinner({ winnerPosition: 1 })}
               >
-                <Medal className="text-green-500" />
+                <Medal className="text-blue-500" />
                 Announce 1st
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => announceWinner({ winnerPosition: 1 })}
               >
-                <Medal className="text-orange-500" />
+                <Medal className="text-green-500" />
                 Announce 2nd
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => announceWinner({ winnerPosition: 1 })}
               >
-                <Medal className="text-blue-500" />
+                <Medal className="text-orange-500" />
                 Announce 3rd
               </DropdownMenuItem>
             </>
@@ -263,7 +263,7 @@ export const columns: ColumnDef<Member>[] = [
             <SwordsIcon className="size-4 md:size-5 text-red-500 fill-red-500/50" />
           )}
           {roleType === "ADMIN" && (
-            <ShieldHalf className="size-4 md:size-5 text-emerald-500 fill-green-500/20" />
+            <ShieldHalf className="size-4 md:size-5 text-emerald-500 fill-blue-500/20" />
           )}
           {roleType === "MODERATOR" && (
             <ShieldCheck className="size-4 md:size-5 text-blue-500 fill-blue-500/20" />

@@ -7,7 +7,7 @@ export const typewriterWords = [
   },
   {
     text: "Cybotixx",
-    className: "dark:text-green-500 text-green-500",
+    className: "dark:text-blue-500 text-blue-500",
   },
 ];
 

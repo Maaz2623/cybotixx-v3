@@ -194,7 +194,7 @@ const ProfileForm = ({
           <Button
             type="submit"
             disabled
-            className="w-full bg-primary/50 hover:bg-primary/70 border-green-600 border text-white"
+            className="w-full bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
           >
             Save
           </Button>

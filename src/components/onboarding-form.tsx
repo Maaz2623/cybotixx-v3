@@ -227,7 +227,7 @@ const OnboardingForm = ({ userId }: { userId: string }) => {
           </div>
           <Button
             type="submit"
-            className="w-full bg-primary/50 hover:bg-primary/70 border-green-600 border text-white"
+            className="w-full bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
             disabled={!checked}
           >
             {isPending ? (

@@ -14,7 +14,7 @@ const EventContainer = () => {
   if (!events)
     return (
       <div className="h-40 w-full flex justify-center items-center">
-        <LoaderIcon className="text-green-500 animate-spin size-10" />
+        <LoaderIcon className="text-blue-500 animate-spin size-10" />
       </div>
     );
 
@@ -31,7 +31,7 @@ const EventContainer = () => {
           <div
             onClick={() => router.push(`/events/${event._id}`)}
             key={event._id}
-            className="border cursor-pointer shadow-lg shadow-green-500/20 rounded-lg overflow-hidden md:flex w-full"
+            className="border cursor-pointer shadow-lg shadow-blue-500/20 rounded-lg overflow-hidden md:flex w-full"
           >
             <div className="aspect-video border-b overflow-hidden relative w-full md:w-1/2">
               {event.eventImage && (
@@ -50,7 +50,7 @@ const EventContainer = () => {
                   className={cn(
                     "border md:hidden rounded-md py-1 text-xs px-2",
                     isBefore(eventDateObject, currentDate) &&
-                      "bg-green-500/50 border-green-500",
+                      "bg-blue-500/50 border-blue-500",
                     isAfter(eventDateObject, currentDate) &&
                       "bg-gray-600/50 border-white"
                   )}
@@ -67,7 +67,7 @@ const EventContainer = () => {
                 className={cn(
                   "border hidden md:flex w-fit mt-4 rounded-md py-1 text-xs px-2",
                   isBefore(eventDateObject, currentDate) &&
-                    "bg-green-500/50 border-green-500",
+                    "bg-blue-500/50 border-blue-500",
                   isAfter(eventDateObject, currentDate) &&
                     "bg-gray-600/50 border-white"
                 )}

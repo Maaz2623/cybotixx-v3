@@ -55,7 +55,7 @@ const EventIdPage = () => {
   if (!event || !currentUser) {
     return (
       <div className="h-64 flex justify-center items-center w-full">
-        <LoaderIcon className="size-8 animate-spin text-green-500" />
+        <LoaderIcon className="size-8 animate-spin text-blue-500" />
       </div>
     );
   }
@@ -107,7 +107,7 @@ const EventIdPage = () => {
             <DialogTrigger asChild>
               <Button
                 type="submit"
-                className="w-20 text-xs bg-primary/50 hover:bg-primary/70 border-green-600 border text-white"
+                className="w-20 text-xs bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
               >
                 Edit Event
               </Button>
@@ -160,7 +160,7 @@ const EventIdPage = () => {
                               <div className="w-full flex justify-end items-center">
                                 <Button
                                   type="submit"
-                                  className="w-20 text-xs bg-primary/50 hover:bg-primary/70 border-green-600 border text-white"
+                                  className="w-20 text-xs bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
                                 >
                                   Submit
                                 </Button>
@@ -219,9 +219,9 @@ const EventIdPage = () => {
             onClick={participate}
             type="submit"
             disabled={!!participant || isPending}
-            className="h-8 text-xs md:text-sm w-[80px] md:w-[100px] bg-primary/50 hover:bg-primary/70 border-green-600 border text-white"
+            className="h-8 text-xs md:text-sm w-[80px] md:w-[100px] bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
           >
-            {participant && <Check className="size-4 text-green-200" />}
+            {participant && <Check className="size-4 text-blue-200" />}
             {!participant && "Participate"}
           </Button>
         </div>
@@ -237,7 +237,7 @@ const EventIdPage = () => {
                   <p
                     className={cn(
                       "px-2 py-1 w-full text-sm border-b md:text-base transition-transform transform duration-300",
-                      tab.isActive && "border-b-green-500"
+                      tab.isActive && "border-b-blue-500"
                     )}
                   >
                     {tab.label}

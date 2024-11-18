@@ -72,7 +72,7 @@ export type Winner = {
 //                     toast.success("Role assigned successfully");
 //                   }}
 //                 >
-//                   <ShieldHalf className="size-4 md:size-5 text-emerald-500 fill-green-500/20" />
+//                   <ShieldHalf className="size-4 md:size-5 text-emerald-500 fill-blue-500/20" />
 //                   Admin
 //                 </DropdownMenuItem>
 //               )}
@@ -183,7 +183,7 @@ export type Winner = {
 //                 <DropdownMenuItem
 //                   onClick={() => announceWinner({ winnerPosition: 1 })}
 //                 >
-//                   <Medal className="text-green-500" />
+//                   <Medal className="text-blue-500" />
 //                   Announce 1st
 //                 </DropdownMenuItem>
 //                 <DropdownMenuItem
@@ -237,7 +237,7 @@ export const columns: ColumnDef<Winner>[] = [
             <SwordsIcon className="size-4 md:size-5 text-red-500 fill-red-500/50" />
           )}
           {roleType === "ADMIN" && (
-            <ShieldHalf className="size-4 md:size-5 text-emerald-500 fill-green-500/20" />
+            <ShieldHalf className="size-4 md:size-5 text-emerald-500 fill-blue-500/20" />
           )}
           {roleType === "MODERATOR" && (
             <ShieldCheck className="size-4 md:size-5 text-blue-500 fill-blue-500/20" />

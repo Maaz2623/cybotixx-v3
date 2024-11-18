@@ -65,7 +65,7 @@ const HomePage = () => {
         />
         <Button
           onClick={() => router.push(`/events`)}
-          className="mt-10 bg-primary/50 border border-green-600 cursor-pointer hover:bg-primary/80 flex justify-center items-center gap-2 z-10 text-white"
+          className="mt-10 bg-primary/50 border border-blue-600 cursor-pointer hover:bg-primary/80 flex justify-center items-center gap-2 z-10 text-white"
         >
           <SignedIn>Dashboard</SignedIn>
           <SignedOut>Join the forum</SignedOut>

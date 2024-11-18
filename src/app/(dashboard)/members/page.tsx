@@ -19,7 +19,7 @@ const MembersPage = () => {
     <div className="w-full p-5 mt-10 max-h-screen">
       {membersLoading ? (
         <div className="w-full h-20 flex justify-center items-center">
-          <LoaderIcon className="text-green-500 size-10 animate-spin" />
+          <LoaderIcon className="text-blue-500 size-10 animate-spin" />
         </div>
       ) : (
         <DataTable columns={columns} data={formattedMembers} />

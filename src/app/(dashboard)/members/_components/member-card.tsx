@@ -49,7 +49,7 @@ const MemberCard = ({ convex_user_id }: { convex_user_id: Id<"users"> }) => {
             </div>
           )}
           {data.roleType === "ADMIN" && (
-            <div className="flex justify-center items-center gap-1 border py-1 px-2 rounded-md bg-green-500/50 border-green-500">
+            <div className="flex justify-center items-center gap-1 border py-1 px-2 rounded-md bg-blue-500/50 border-blue-500">
               <ShieldHalf className="size-3 md:size-4" />
               <p className="font-medium">Admin</p>
             </div>
@@ -82,7 +82,7 @@ const MemberCard = ({ convex_user_id }: { convex_user_id: Id<"users"> }) => {
         <p className="font-medium text-lg flex items-center justify-center text-center text-pretty">
           {data.fullName}
         </p>
-        <p className="text-xs mb-2 md:text-sm border px-2 py-1 rounded-md bg-green-500/30 border-green-500">
+        <p className="text-xs mb-2 md:text-sm border px-2 py-1 rounded-md bg-blue-500/30 border-blue-500">
           {data.registerNumber.toUpperCase()}
         </p>
         <div className="flex gap-8 w-full md:h-40">

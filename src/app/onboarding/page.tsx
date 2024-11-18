@@ -19,11 +19,11 @@ const OnboardingPage = () => {
   if (isLoading) {
     return (
       <div className="h-40 flex justify-center items-center">
-        <LoaderIcon className="size-10 text-green-500 animate-spin" />
+        <LoaderIcon className="size-10 text-blue-500 animate-spin" />
       </div>
     );
   }
-  
+
   if (!userId) {
     return null;
   }

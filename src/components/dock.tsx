@@ -97,14 +97,14 @@ const Dock = () => {
               <div
                 className={cn(
                   "p-2 rounded-md hover:bg-white/10 transition duration-100",
-                  isActive && "bg-white/10 text-green-200"
+                  isActive && "bg-white/10 text-blue-200"
                 )}
               >
                 {<item.icon />}
               </div>
               <div
                 className={cn(
-                  "absolute bottom-0 left-50 bg-green-500 h-0.5 w-1/2 scale-x-0 transition-transform duration-200 ease-in-out transform",
+                  "absolute bottom-0 left-50 bg-blue-500 h-0.5 w-1/2 scale-x-0 transition-transform duration-200 ease-in-out transform",
                   isActive && "scale-x-100"
                 )}
               />

@@ -4,7 +4,7 @@ import React from "react";
 const LoadingPage = () => {
   return (
     <div className="h-screen flex justify-center items-center">
-      <LoaderIcon className="size-6 text-green-500 animate-spin" />
+      <LoaderIcon className="size-6 text-blue-500 animate-spin" />
     </div>
   );
 };
