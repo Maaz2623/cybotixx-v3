@@ -32,8 +32,12 @@ const EventsPage = () => {
 
   const { mutate } = useCreateEvent();
 
-  
-  if (!currentUser) return null;
+  if (!currentUser)
+    return (
+      <div className="flex justify-center items-center h-40">
+        <LoaderIcon className="text-green-500 size-8 animate-spin" />
+      </div>
+    );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
