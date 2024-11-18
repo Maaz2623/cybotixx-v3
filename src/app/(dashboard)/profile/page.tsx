@@ -28,7 +28,10 @@ const ProfilePage = () => {
             courseName={data.courseName}
             courseYear={data.courseYear}
             phoneNumber={data.phoneNumber}
-            clerkId={data.clerkId}
+            clerkId={data.clerkId as string}
+            clerkImageUrl={data.clerkImageUrl}
+            prizesWon={data.prizesWon}
+            participations={data.participations}
           />
         </div>
       </motion.div>
