@@ -29,7 +29,9 @@ const MemberCard = ({ convex_user_id }: { convex_user_id: Id<"users"> }) => {
 
   return (
     <DialogContent className="rounded-lg h-fit border border-white/20 w-[80%] aspect-square">
-      <h1 className="w-full text-center text-2xl md:text-4xl font-semibold">Member Card</h1>
+      <h1 className="w-full text-center text-2xl md:text-4xl font-semibold">
+        Member Card
+      </h1>
       <Separator />
       <div className="flex justify-center md:justify-start md:mt-3 items-center gap-y-2 md:gap-y-4 p-4 flex-col">
         <Image
@@ -79,6 +81,9 @@ const MemberCard = ({ convex_user_id }: { convex_user_id: Id<"users"> }) => {
         </span>
         <p className="font-medium text-lg flex items-center justify-center text-center text-pretty">
           {data.fullName}
+        </p>
+        <p className="text-xs mb-2 md:text-sm border px-2 py-1 rounded-md bg-green-500/30 border-green-500">
+          {data.registerNumber.toUpperCase()}
         </p>
         <div className="flex gap-8 w-full md:h-40">
           <div className="bg-white/5 border border-white/40 rounded-lg w-full flex flex-col p-2 md:p-4 text-center">

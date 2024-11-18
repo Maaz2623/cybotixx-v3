@@ -24,7 +24,7 @@ export const createUser = mutation({
 
     const userId = await ctx.db.insert("users", {
       fullName: args.fullName,
-      registerNumber: args.registerNumber,
+      registerNumber: args.registerNumber.toLocaleLowerCase(),
       courseName: args.courseName,
       courseYear: args.courseYear,
       phoneNumber: args.phoneNumber,
@@ -100,4 +100,3 @@ export const assignRoleType = mutation({
     return adminnedMember;
   },
 });
-
