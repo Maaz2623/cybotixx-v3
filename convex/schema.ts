@@ -8,7 +8,7 @@ export default defineSchema({
     courseName: v.string(),
     courseYear: v.string(),
     phoneNumber: v.string(),
-    clerkId: v.string(),
+    clerkId: v.optional(v.string()),
     clerkImageUrl: v.string(),
     roleType: v.string(),
     prizesWon: v.number(),

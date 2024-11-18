@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -22,12 +22,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import { useCreateUser } from "@/features/users/api/use-create-user";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { LoaderIcon } from "lucide-react";
 import Cookies from "js-cookie";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const formSchema = z.object({
   fullName: z.string().min(2).max(100),
@@ -39,10 +40,10 @@ const formSchema = z.object({
   clerkImageUrl: z.string(),
 });
 
-const OnboardingForm = () => {
-  const { userId } = useAuth();
-
+const OnboardingForm = ({ userId }: { userId: string }) => {
   const userImageUrl = useUser().user?.imageUrl;
+
+  const [checked, setCheck] = useState(false);
 
   const { mutate, isPending } = useCreateUser();
   const router = useRouter();
@@ -55,7 +56,7 @@ const OnboardingForm = () => {
       courseName: "",
       courseYear: "",
       phoneNumber: "",
-      clerkId: "",
+      clerkId: userId as string,
       clerkImageUrl: "",
     },
   });
@@ -65,7 +66,6 @@ const OnboardingForm = () => {
     try {
       const { fullName, registerNumber, courseName, courseYear, phoneNumber } =
         values;
-      console.log(values);
 
       mutate(
         {
@@ -96,6 +96,13 @@ const OnboardingForm = () => {
       console.log(error);
     }
   }
+
+  const handleCheck = () => {
+    if (checked) {
+      setCheck(false);
+    }
+    setCheck(true);
+  };
 
   return (
     <div className="my-10 w-full mx-4 md:w-1/3 sm:w-1/2 space-y-4">
@@ -206,9 +213,14 @@ const OnboardingForm = () => {
               </FormItem>
             )}
           />
+          <div className="flex justify-start items-center gap-2">
+            <Checkbox checked={checked} onCheckedChange={handleCheck} />
+            <p>I agree to have provided the correct information.</p>
+          </div>
           <Button
             type="submit"
             className="w-full bg-primary/50 hover:bg-primary/70 border-green-600 border text-white"
+            disabled={true}
           >
             {isPending ? (
               <LoaderIcon className="text-white size-4 animate-spin" />

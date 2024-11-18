@@ -30,14 +30,17 @@ const OnboardingPage = () => {
       path: "/",
     });
 
-    router.replace("/events"); // Redirect if user data is found
-    return;
+    return router.replace("/events"); // Redirect if user data is found
+  }
+
+  if (!userId) {
+    return router.replace("/sign-in");
   }
 
   // Render onboarding form if no user data exists
   return (
     <div className="w-full flex justify-center items-center">
-      <OnboardingForm />
+      <OnboardingForm userId={userId} />
     </div>
   );
 };

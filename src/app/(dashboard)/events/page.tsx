@@ -52,7 +52,7 @@ const EventsPage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center space-y-4">
       {(currentUser.roleType === "ADMIN" ||
         currentUser.roleType === "SUPER_ADMIN") && (
         <Dialog>
