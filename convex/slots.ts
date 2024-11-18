@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { Id } from "./_generated/dataModel";
 
 export const getSlotsByEventId = query({
   args: {
@@ -52,5 +53,50 @@ export const joinSlot = mutation({
     });
 
     return slot.slotNumber;
+  },
+});
+
+export const getFullSlots = query({
+  args: {
+    eventId: v.id("events"),
+  },
+  handler: async (ctx, args) => {
+    const events = await ctx.db.get(args.eventId);
+
+    if (!events) return;
+
+    // Fetch slots associated with the given event ID
+    const fullSlots = await ctx.db
+      .query("slots")
+      .filter((q) => q.eq(q.field("eventId"), args.eventId))
+      .collect();
+
+    if (!fullSlots || fullSlots.length === 0) return;
+
+    // Flatten all member IDs into a single array
+    const memberIds = fullSlots.flatMap((slot) => slot.slotMembers);
+
+    // Fetch user details for each member ID
+    const formattedData = await Promise.all(
+      memberIds.map((id) =>
+        ctx.db
+          .query("users")
+          .filter((q) => q.eq(q.field("_id"), id))
+          .first()
+      )
+    );
+
+    // Ensure only valid user data is returned
+    const validMembers = formattedData.filter((user) => user !== null);
+
+    return {
+      slots: fullSlots.map((slot) => ({
+        slotId: slot._id,
+        slotNumber: slot.slotNumber,
+        members: validMembers.filter((user) =>
+          slot.slotMembers.includes(user._id)
+        ),
+      })),
+    };
   },
 });

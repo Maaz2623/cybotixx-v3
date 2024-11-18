@@ -88,11 +88,15 @@ const EventIdPage = () => {
       component: <Rules eventId={eventId} />,
       isActive: tabActive === "Rules",
     },
-    {
-      label: "Teams",
-      component: <Teams eventId={event._id} />,
-      isActive: tabActive === "Teams",
-    },
+    ...(event.eventType === "team" // Check if event type is "teams"
+      ? [
+          {
+            label: "Teams",
+            component: <Teams eventId={event._id} />,
+            isActive: tabActive === "Teams",
+          },
+        ]
+      : []), // If not, don't include the Teams tab
     {
       label: "Participants",
       component: <Participants eventId={event._id} />,
