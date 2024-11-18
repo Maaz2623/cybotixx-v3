@@ -66,7 +66,21 @@ export const getUserByClerkId = query({
 export const getMembers = query({
   args: {},
   handler: async (ctx) => {
+    const rolePriority = [
+      "SUPER_ADMIN",
+      "ADMIN",
+      "MODERATOR",
+      "CORE_MEMBER",
+      "MEMBER",
+      "BANNED",
+    ];
     const members = await ctx.db.query("users").collect();
+
+    members.sort((a, b) => {
+      const roleAIndex = rolePriority.indexOf(a.roleType);
+      const roleBIndex = rolePriority.indexOf(b.roleType);
+      return roleAIndex - roleBIndex;
+    });
 
     return members;
   },
