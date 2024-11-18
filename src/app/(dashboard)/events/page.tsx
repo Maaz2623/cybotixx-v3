@@ -31,6 +31,8 @@ const EventsPage = () => {
   });
 
   const { mutate } = useCreateEvent();
+
+  
   if (!currentUser) return null;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
