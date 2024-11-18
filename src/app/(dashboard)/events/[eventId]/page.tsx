@@ -49,6 +49,7 @@ const EventIdPage = () => {
 
   const { data: participant } = useGetParticipantByMemberId({
     convex_user_id: currentUser?._id as Id<"users">,
+    eventId: eventId as Id<"events">,
   });
 
   if (!event || !currentUser) {
@@ -198,14 +199,20 @@ const EventIdPage = () => {
       <div className="p-2 space-y-4 border md:w-[80%]">
         <div className="w-full flex justify-center items-center">
           <div className="aspect-video w-full md:w-full rounded-lg border overflow-hidden relative">
-            <Image
-              src={event?.eventImage}
-              alt="image"
-              // width={500}
-              // height={500}
-              fill
-              className=""
-            />
+            {event.eventImage !== "" ? (
+              <Image
+                src={event?.eventImage}
+                alt="image"
+                // width={500}
+                // height={500}
+                fill
+                className=""
+              />
+            ) : (
+              <div className="h-full flex justify-center items-center w-full bg-white/10">
+                No Image
+              </div>
+            )}
           </div>
         </div>
         <div className="border w-full px-4 h-14 flex justify-between items-center">

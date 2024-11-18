@@ -27,11 +27,13 @@ export const createParticipant = mutation({
 export const getParticipantByMemberId = query({
   args: {
     convex_user_id: v.optional(v.id("users")),
+    eventId: v.id("events"),
   },
   handler: async (ctx, args) => {
     const participant = await ctx.db
       .query("participants")
       .filter((q) => q.eq(q.field("memberId"), args.convex_user_id))
+      .filter((q) => q.eq(q.field("eventId"), args.eventId))
       .first();
 
     if (!participant) return;
