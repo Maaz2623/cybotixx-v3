@@ -80,8 +80,6 @@ const EventIdPage = () => {
     setNewRule("");
   };
 
-  console.log(rules);
-
   const tabs: TabInterface[] = [
     {
       label: "Rules",

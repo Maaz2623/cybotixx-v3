@@ -39,6 +39,8 @@ export const getWinnersByEventId = query({
 
     const memberIds = winners.map((member) => member.memberId);
 
+    if (!memberIds) return;
+
     const formattedWinners = await Promise.all(
       memberIds.map((id) =>
         ctx.db
@@ -47,6 +49,8 @@ export const getWinnersByEventId = query({
           .first()
       )
     );
+
+    if (!formattedWinners) return;
 
     return formattedWinners;
   },

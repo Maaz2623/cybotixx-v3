@@ -8,7 +8,7 @@ export const createUser = mutation({
     courseName: v.string(),
     courseYear: v.string(),
     phoneNumber: v.string(),
-    clerkId: v.optional(v.string()),
+    clerkId: v.string(),
     clerkImageUrl: v.string(),
     prizesWon: v.number(),
     participations: v.number(),

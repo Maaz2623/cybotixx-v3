@@ -51,9 +51,12 @@ export const getParticipants = query({
       .query("participants")
       .filter((q) => q.eq(q.field("eventId"), args.eventId))
       .collect();
+
     if (!participants) return;
 
     const memberIds = participants.map((member) => member.memberId);
+
+    if (!memberIds) return;
 
     const members = await Promise.all(
       memberIds.map((id) =>
@@ -63,6 +66,8 @@ export const getParticipants = query({
           .first()
       )
     );
+
+    if (!members) return;
 
     return members.reverse();
   },
