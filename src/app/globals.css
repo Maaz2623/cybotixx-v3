@@ -72,3 +72,63 @@
   width: 100%;
   height: 100%;
 }
+
+@media print {
+  /* General body styles for print */
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+
+  /* Table styles for print */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    page-break-before: always; /* Ensures that the table starts on a new page */
+  }
+
+  /* Table row styles to prevent page break in the middle of rows */
+  tr {
+    page-break-inside: avoid;
+  }
+
+  /* Table header styles */
+  th,
+  td {
+    padding: 8px 12px;
+    border: 1px solid #000;
+    text-align: center;
+    word-wrap: break-word; /* Handles long words */
+  }
+
+  /* Column-specific width adjustments for printing */
+  th {
+    font-weight: bold;
+  }
+
+  /* Prevent overflowing content in cells */
+  td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px; /* Limit column width */
+  }
+
+  /* Flex container inside each row */
+  .flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Separator styling for consistent breaks */
+  .separator {
+    border-top: 1px solid #000;
+    margin: 8px 0;
+  }
+
+  /* Prevent content from overflowing when printed */
+  .border {
+    border: 1px solid #000;
+  }
+}

@@ -27,6 +27,7 @@ import { Id } from "../../../../../convex/_generated/dataModel";
 import { useGetParticipantByMemberId } from "@/features/participants/api/use-get-participant-by-member-id";
 import Teams from "./_components/teams/teams";
 import TeamSlots from "./_components/teams/team-slots";
+import { useRouter } from "next/navigation";
 
 interface TabInterface {
   label: string;
@@ -37,6 +38,7 @@ interface TabInterface {
 const EventIdPage = () => {
   const eventId = useEventId();
   const { userId } = useAuth();
+  const [loading, setLoading] = useState(false);
   const { data: event } = useGetEventById({ eventId });
   const { data: currentUser } = useGetUserByClerkId({
     clerkId: userId as string,
@@ -47,6 +49,7 @@ const EventIdPage = () => {
   const [rules, setRules] = useState<Array<string>>(
     event?.eventRules.reverse() || []
   );
+  const router = useRouter();
   const [newRule, setNewRule] = useState("");
 
   const { data: participant } = useGetParticipantByMemberId({
@@ -115,14 +118,29 @@ const EventIdPage = () => {
         currentUser?.roleType === "ADMIN") && (
         <div className="flex w-full items-center justify-end">
           <Dialog>
-            <DialogTrigger asChild>
+            <div className="flex gap-3">
               <Button
-                type="submit"
-                className="w-20 text-xs bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
+                onClick={() => {
+                  setLoading(true);
+                  router.push(`/print/${eventId}`);
+                }}
+                className="bg-primary/50 border w-[80px] text-xs border-primary text-white"
               >
-                Edit Event
+                {loading ? (
+                  <LoaderIcon className="size-4 animate-spin text-white" />
+                ) : (
+                  "Print"
+                )}
               </Button>
-            </DialogTrigger>
+              <DialogTrigger asChild>
+                <Button
+                  type="submit"
+                  className="w-20 text-xs bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
+                >
+                  Edit Event
+                </Button>
+              </DialogTrigger>
+            </div>
             <DialogContent className="w-[80%]">
               <DialogHeader>
                 <DialogTitle className="w-full text-center text-2xl">
