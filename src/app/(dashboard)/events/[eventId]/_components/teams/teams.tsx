@@ -25,22 +25,9 @@ const Teams = ({ eventId }: { eventId: string }) => {
   const { data } = useGetFullSlots({ eventId: eventId as Id<"events"> });
   const { data: event } = useGetEventById({ eventId: eventId as Id<"events"> });
 
-  
   if (!event) return;
-  
-  if (!data) return;
-    
-  const formattedSlotMembers: Member[] = data.flatMap((slot) => {
-    if(!slot) return [];
-    return slot.slotMembers.map((member, index) => ({
-      convex_user_id: member?._id as Id<"users">,
-      clerkImageUrl: member?.clerkImageUrl as string,
-      fullName: member?.fullName as string,
-      roleType: member?.roleType as Member["roleType"],
-      index,
-    }))
-  })
 
+  if (!data) return;
 
   return (
     <div className="min-h-screen border w-full">
@@ -60,7 +47,18 @@ const Teams = ({ eventId }: { eventId: string }) => {
         </h1>
       </div>
       <div className="border flex flex-wrap justify-center items-start gap-x-4 p-4 gap-y-6 md:p-14">
-        {data.map(({slotNumber, slotId, slotMembers}) => {
+        {data.map(({ slotNumber, slotId, slotMembers }) => {
+          const formattedSlotMembers: Member[] = slotMembers.map(
+            (member, index) => {
+              return {
+                convex_user_id: member?._id as Id<"users">,
+                clerkImageUrl: member?.clerkImageUrl as string,
+                fullName: member?.fullName as string,
+                roleType: member?.roleType as Member["roleType"],
+                index,
+              };
+            }
+          );
 
           return (
             <Dialog key={slotId}>
