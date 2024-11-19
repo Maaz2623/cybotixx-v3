@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useGetEventById } from "@/features/events/api/use-get-event-by-id";
-import { LoaderIcon, PlusCircleIcon } from "lucide-react";
+import { LoaderIcon, PlusCircleIcon, UserIcon, UsersIcon } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
 import Image from "next/image";
@@ -243,7 +243,22 @@ const EventIdPage = () => {
           </div>
         </div>
         <div className="w-full px-4 h-14 flex justify-between items-center">
-          <p className="text-xl md:text-3xl font-semibold">{event.eventName}</p>
+          <div className="flex flex-col gap-y-1 justify-start items-center">
+            <p className="text-xl md:text-3xl font-semibold">
+              {event.eventName}
+            </p>
+            {event.eventType === "team" ? (
+              <p className="flex text-sm w-full text-gray-400 justify-start">
+                <UsersIcon className="size-4" />
+                Team
+              </p>
+            ) : (
+              <p className="flex text-sm w-full text-gray-400 justify-start">
+                <UserIcon className="size-4" />
+                Team
+              </p>
+            )}
+          </div>
           {event.eventType === "individual" && (
             <Button
               onClick={participate}

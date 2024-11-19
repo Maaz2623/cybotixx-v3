@@ -116,10 +116,13 @@ const TeamSlots = () => {
       {!!participant && (
         <Button
           disabled
-          className="border-primary border text-white bg-primary/50 w-[80px] text-sm md:text-sm rounded-md"
+          className="border-primary border text-white bg-primary/50 w-[100px] text-sm md:text-sm rounded-md"
         >
           <CheckIcon className="size-3" />
-          <p className="text-xs">Slot {joinedSlot?.slotNumber}</p>
+          <p className="text-xs">
+            Slot {joinedSlot?.slotNumber} ({joinedSlot?.slotMembers.length}/
+            {event.eventTeamMaxMembers})
+          </p>
         </Button>
       )}
       <DialogContent className="w-[90%] rounded-lg">

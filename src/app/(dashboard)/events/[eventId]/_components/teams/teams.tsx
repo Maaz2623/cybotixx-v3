@@ -34,7 +34,7 @@ const Teams = ({ eventId }: { eventId: string }) => {
   if (!allSlots) return;
 
   return (
-    <div className="min-h-screen border w-full">
+    <div className="min-h-screen w-full">
       <div className="flex justify-center items-center w-full">
         <h1 className="text-xl md:text-2xl p-5 font-semibold flex items-center gap-2 justify-center">
           <p>
@@ -52,7 +52,7 @@ const Teams = ({ eventId }: { eventId: string }) => {
           </TooltipProvider>
         </h1>
       </div>
-      <div className="border flex flex-wrap justify-center items-start gap-x-4 p-4 gap-y-6 md:p-14">
+      <div className="flex border bg-white/5 rounded-md min-h-40 flex-wrap justify-center items-start gap-x-4 p-4 gap-y-6 md:p-14">
         {data.map(({ slotNumber, slotId, slotMembers }) => {
           const formattedSlotMembers: Member[] = slotMembers.map(
             (member, index) => {
