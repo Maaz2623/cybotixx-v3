@@ -263,7 +263,9 @@ const EventIdPage = () => {
             <Button
               onClick={participate}
               type="submit"
-              disabled={!!participant || isPending}
+              disabled={
+                !!participant || isPending || !event.eventRegistrationOpen
+              }
               className="h-8 text-xs md:text-sm w-[80px] md:w-[100px] bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
             >
               {!participant && "Participate"}
