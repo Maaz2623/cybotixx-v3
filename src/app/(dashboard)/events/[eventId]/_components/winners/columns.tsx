@@ -2,17 +2,20 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import {
+  AwardIcon,
   Shield,
   ShieldBan,
   ShieldCheck,
   ShieldEllipsis,
   ShieldHalf,
   SwordsIcon,
+  TrophyIcon,
 } from "lucide-react";
 import Image from "next/image";
 
 // Define the Member type
 export type Winner = {
+  winnerPosition: number;
   convex_user_id: string;
   clerkImageUrl: string;
   fullName: string;
@@ -81,13 +84,28 @@ export const columns: ColumnDef<Winner>[] = [
     accessorKey: "index",
     header: "Position",
     cell: ({ row }) => {
-      const position = row.original.index + 1;
+      const position = row.original.winnerPosition;
 
       return (
         <div>
-          {position === 1 && "1st"}
-          {position === 2 && "2nd"}
-          {position === 3 && "3rd"}
+          {position === 1 && (
+            <div className="flex gap-1 justify-start items-center">
+              <TrophyIcon className="text-yellow-600 " />
+              <p className="text-lg font-semibold">1st</p>
+            </div>
+          )}
+          {position === 2 && (
+            <div className="flex gap-1 justify-start items-center">
+              <AwardIcon className="text-gray-300" />
+              <p className="text-lg font-semibold">2nd</p>
+            </div>
+          )}
+          {position === 3 && (
+            <div className="flex gap-1 justify-start items-center">
+              <AwardIcon className="text-amber-900" />
+              <p className="text-lg font-semibold">3rd</p>
+            </div>
+          )}
         </div>
       );
     },

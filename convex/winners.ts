@@ -41,27 +41,44 @@ export const getWinnersByEventId = query({
     eventId: v.id("events"),
   },
   handler: async (ctx, args) => {
+    // Fetch winners for the given eventId
     const winners = await ctx.db
       .query("winners")
       .filter((q) => q.eq(q.field("eventId"), args.eventId))
       .collect();
-    if (!winners) return;
 
-    const memberIds = winners.map((member) => member.memberId);
+    if (!winners || winners.length === 0) return { winners: [] };
 
-    if (!memberIds) return;
-
+    // Map over the winners to fetch corresponding user data
     const formattedWinners = await Promise.all(
-      memberIds.map((id) =>
-        ctx.db
+      winners.map(async (winner) => {
+        const user = await ctx.db
           .query("users")
-          .filter((q) => q.eq(q.field("_id"), id))
-          .first()
-      )
+          .filter((q) => q.eq(q.field("_id"), winner.memberId))
+          .first();
+
+        if (user) {
+          return {
+            ...user,
+            winnerPosition: winner.winnerPosition, // Add position from the "winners" collection
+          };
+        }
+
+        return null; // Handle cases where user is not found
+      })
     );
 
-    if (!formattedWinners) return;
+    // Filter out any null values
+    const validWinners = formattedWinners.filter((winner) => winner !== null);
 
-    return formattedWinners;
+    const positionPriority = [1, 2, 3];
+
+    validWinners.sort((a, b) => {
+      const roleAIndex = positionPriority.indexOf(a.winnerPosition);
+      const roleBIndex = positionPriority.indexOf(b.winnerPosition);
+      return roleAIndex - roleBIndex;
+    });
+
+    return { winners: validWinners };
   },
 });

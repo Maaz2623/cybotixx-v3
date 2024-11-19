@@ -11,19 +11,20 @@ const Winners = ({ eventId }: { eventId: string }) => {
 
   if (!winners) return null;
 
-  if (winners.length === 0)
+  if (winners.winners.length === 0)
     return (
       <div className="h-40 flex justify-center items-center">
         <p>Winners not accounced yet</p>
       </div>
     );
 
-  const formattedMembers: Winner[] = winners
+  const formattedMembers: Winner[] = winners.winners
     .filter(
       (winner): winner is NonNullable<typeof winner> =>
         winner !== null && winner !== undefined
     ) // Type guard to exclude null/undefined
     .map((winner, index) => ({
+      winnerPosition: winner.winnerPosition,
       convex_user_id: winner._id as Id<"users">,
       fullName: winner.fullName as string,
       clerkImageUrl: winner.clerkImageUrl as string,
