@@ -90,20 +90,20 @@ export const columns: ColumnDef<Winner>[] = [
         <div>
           {position === 1 && (
             <div className="flex gap-1 justify-start items-center">
-              <TrophyIcon className="text-yellow-600 " />
-              <p className="text-lg font-semibold">1st</p>
+              <TrophyIcon className="text-yellow-600 size-5 md:size-6" />
+              <p className="text-base md:text-lg font-semibold ">1st</p>
             </div>
           )}
           {position === 2 && (
-            <div className="flex gap-1 justify-start items-center">
-              <AwardIcon className="text-gray-300" />
-              <p className="text-lg font-semibold">2nd</p>
+            <div className="flex gap-1 justify-start items-center ">
+              <AwardIcon className="text-gray-300 size-5 md:size-6" />
+              <p className="text-base md:text-lg font-semibold">2nd</p>
             </div>
           )}
           {position === 3 && (
             <div className="flex gap-1 justify-start items-center">
-              <AwardIcon className="text-amber-900" />
-              <p className="text-lg font-semibold">3rd</p>
+              <AwardIcon className="text-amber-900 size-5 md:size-6" />
+              <p className="text-base md:text-lg font-semibold">3rd</p>
             </div>
           )}
         </div>
