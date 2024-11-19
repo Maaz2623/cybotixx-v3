@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useGetEventById } from "@/features/events/api/use-get-event-by-id";
-import { Check, LoaderIcon, PlusCircleIcon } from "lucide-react";
+import { LoaderIcon, PlusCircleIcon } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
 import Image from "next/image";
@@ -251,34 +251,35 @@ const EventIdPage = () => {
               disabled={!!participant || isPending}
               className="h-8 text-xs md:text-sm w-[80px] md:w-[100px] bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
             >
-              {participant && <Check className="size-4 text-blue-200" />}
               {!participant && "Participate"}
             </Button>
           )}
           {event.eventType === "team" && (
-            // <Dialog>
-            //   <DialogTrigger asChild>
-            //     <Button
-            //       disabled={!!participant || isPending}
-            //       className="h-8 text-xs md:text-sm w-[80px] md:w-[100px] bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
-            //     >
-            //       {participant && (
-            //         <div className="flex items-center px-2 gap-1">
-            //           <Check className="size-4 text-blue-200" />
-            //           <p className="text-xs">Joined</p>
-            //         </div>
-            //       )}
-            //       {!participant && "Participate"}
-            //     </Button>
-            //   </DialogTrigger>
-            //   <DialogContent className="w-[90%] rounded-lg">
-            //     <DialogHeader>
-            //       <DialogTitle>Join a Team</DialogTitle>
-            //     </DialogHeader>
-            //     <TeamSlots />
-            //   </DialogContent>
-            // </Dialog>
-            <TeamSlots />
+            <>
+              {/* <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    disabled={isPending}
+                    className="h-8 text-xs md:text-sm w-[80px] md:w-[100px] bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
+                  >
+                    {participant && (
+                      <div className="flex items-center px-2 gap-1">
+                        <Check className="size-4 text-blue-200" />
+                        <p className="text-xs">Joined</p>
+                      </div>
+                    )}
+                    {!participant && "Participate"}
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="w-[90%] rounded-lg">
+                  <DialogHeader>
+                    <DialogTitle>Joined Team</DialogTitle>
+                  </DialogHeader>
+                  <TeamSlots />
+                </DialogContent>
+              </Dialog> */}
+              <TeamSlots />
+            </>
           )}
         </div>
         <div className="w-full flex justify-center items-center">

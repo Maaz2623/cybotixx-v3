@@ -11,7 +11,7 @@ import {
 import { useEventId } from "@/features/events/hooks/use-event-id";
 import { useGetSlots } from "@/features/slots/api/use-get-slots";
 import { Id } from "../../../../../../../convex/_generated/dataModel";
-import { Check, LoaderIcon } from "lucide-react";
+import { Check, CheckIcon, LoaderIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useJoinSlot } from "@/features/slots/api/use-join-slot";
 import { useGetUserByClerkId } from "@/features/users/api/use-get-user";
@@ -22,6 +22,8 @@ import { useGetMembers } from "@/features/members/api/use-get-members";
 import { columns, Member } from "./columns";
 import { useGetEventById } from "@/features/events/api/use-get-event-by-id";
 import { useGetParticipantByMemberId } from "@/features/participants/api/use-get-participant-by-member-id";
+import { cn } from "@/lib/utils";
+import { useGetSlotsByEventIdMemberId } from "@/features/slots/api/use-get-slot-by-event-id-member-id";
 
 const TeamSlots = () => {
   const eventId = useEventId();
@@ -43,6 +45,11 @@ const TeamSlots = () => {
   const { mutate } = useJoinSlot();
 
   const [loading, setLoading] = useState(false);
+
+  const { data: joinedSlot } = useGetSlotsByEventIdMemberId({
+    eventId: eventId,
+    memberId: member?._id as Id<"users">,
+  });
 
   if (!slots || !member || !members || !event) {
     return (
@@ -92,7 +99,10 @@ const TeamSlots = () => {
       <DialogTrigger asChild>
         <Button
           disabled={!!participant}
-          className="h-8 text-xs md:text-sm w-[80px] md:w-[100px] bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
+          className={cn(
+            "h-8 text-xs md:text-sm w-[80px] md:w-[100px] bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white",
+            !!participant && "hidden"
+          )}
         >
           {participant && (
             <div className="flex items-center px-2 gap-1">
@@ -103,6 +113,15 @@ const TeamSlots = () => {
           {!participant && "Participate"}
         </Button>
       </DialogTrigger>
+      {!!participant && (
+        <Button
+          disabled
+          className="border-primary border text-white bg-primary/50 w-[80px] text-sm md:text-sm rounded-md"
+        >
+          <CheckIcon className="size-3" />
+          <p className="text-xs">Slot {joinedSlot?.slotNumber}</p>
+        </Button>
+      )}
       <DialogContent className="w-[90%] rounded-lg">
         <DialogHeader>
           <DialogTitle>Join a Team</DialogTitle>
@@ -154,7 +173,7 @@ const TeamSlots = () => {
                       <DialogTitle>Join Slot {slot.slotNumber}</DialogTitle>
                       <DialogDescription></DialogDescription>
                     </DialogHeader>
-                    <div className="w-full space-y-3">
+                    <div className="w-full space-y-3 overflow-auto">
                       <DataTable data={membersExistInSlot} columns={columns} />
                       <div className="flex justify-end items-center">
                         <Button

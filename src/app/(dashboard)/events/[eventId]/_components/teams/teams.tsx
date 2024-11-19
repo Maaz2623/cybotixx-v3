@@ -20,20 +20,26 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useGetSlots } from "@/features/slots/api/use-get-slots";
 
 const Teams = ({ eventId }: { eventId: string }) => {
   const { data } = useGetFullSlots({ eventId: eventId as Id<"events"> });
   const { data: event } = useGetEventById({ eventId: eventId as Id<"events"> });
+  const { data: allSlots } = useGetSlots({ eventId: eventId as Id<"events"> });
 
   if (!event) return;
 
   if (!data) return;
 
+  if (!allSlots) return;
+
   return (
     <div className="min-h-screen border w-full">
       <div className="flex justify-center items-center w-full">
         <h1 className="text-xl md:text-2xl p-5 font-semibold flex items-center gap-2 justify-center">
-          <p>{data.length} Slot(s) full</p>
+          <p>
+            {data.length}/{allSlots.length} Slot(s) full
+          </p>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -79,7 +85,7 @@ const Teams = ({ eventId }: { eventId: string }) => {
                   </DialogTitle>
                   <DialogDescription></DialogDescription>
                 </DialogHeader>
-                <div className="w-full space-y-3">
+                <div className="w-full space-y-3 overflow-auto">
                   <DataTable data={formattedSlotMembers} columns={columns} />
                 </div>
               </DialogContent>

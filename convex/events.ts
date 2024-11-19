@@ -18,7 +18,7 @@ export const createEvent = mutation({
       eventTeamMaxMembers: args.eventTeamMaxMembers,
     });
 
-    Array.from({ length: 50 }, (_, index) =>
+    Array.from({ length: 100 }, (_, index) =>
       ctx.db.insert("slots", {
         slotMembers: [],
         slotNumber: index + 1,

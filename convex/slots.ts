@@ -97,3 +97,21 @@ export const getFullSlots = query({
   },
 });
 
+export const getSlotByEventIdMemberId = query({
+  args: {
+    eventId: v.id("events"),
+    memberId: v.id("users"),
+  },
+  handler: async (ctx, args) => {
+    const slots = await ctx.db
+      .query("slots")
+      .filter((q) => q.eq(q.field("eventId"), args.eventId))
+      .collect();
+
+    if (!slots || slots.length === 0) return null; // If no slots found, return null
+
+    const slot = slots.find((slot) => slot.slotMembers.includes(args.memberId));
+
+    return slot;
+  },
+});
