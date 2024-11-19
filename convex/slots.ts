@@ -51,7 +51,7 @@ export const joinSlot = mutation({
       slotMembers: updatedSlotMembers,
     });
 
-    return slot.slotNumber;
+    return slot._id;
   },
 });
 
