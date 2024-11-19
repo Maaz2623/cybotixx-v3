@@ -1,6 +1,5 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import { Id } from "./_generated/dataModel";
 
 export const getSlotsByEventId = query({
   args: {
@@ -61,42 +60,40 @@ export const getFullSlots = query({
     eventId: v.id("events"),
   },
   handler: async (ctx, args) => {
-    const events = await ctx.db.get(args.eventId);
+    const event = await ctx.db.get(args.eventId);
 
-    if (!events) return;
+    if (!event) return; // If the event doesn't exist, return early
 
     // Fetch slots associated with the given event ID
-    const fullSlots = await ctx.db
+    const allSlots = await ctx.db
       .query("slots")
       .filter((q) => q.eq(q.field("eventId"), args.eventId))
       .collect();
 
-    if (!fullSlots || fullSlots.length === 0) return;
-
-    // Flatten all member IDs into a single array
-    const memberIds = fullSlots.flatMap((slot) => slot.slotMembers);
-
-    // Fetch user details for each member ID
-    const formattedData = await Promise.all(
-      memberIds.map((id) =>
-        ctx.db
-          .query("users")
-          .filter((q) => q.eq(q.field("_id"), id))
-          .first()
-      )
+    // Filter slots by the number of slot members
+    const fullSlots = allSlots.filter(
+      (slot) => slot.slotMembers.length === event.eventTeamMaxMembers
     );
 
-    // Ensure only valid user data is returned
-    const validMembers = formattedData.filter((user) => user !== null);
+    // Format the data, fetching member details asynchronously
+    const formattedData = await Promise.all(
+      fullSlots.map(async (slot) => {
+        const fullSlotMembers = await Promise.all(
+          slot.slotMembers.map(async (memberId) => {
+            const fetchedMember = await ctx.db.get(memberId);
+            return fetchedMember;
+          })
+        );
 
-    return {
-      slots: fullSlots.map((slot) => ({
-        slotId: slot._id,
-        slotNumber: slot.slotNumber,
-        members: validMembers.filter((user) =>
-          slot.slotMembers.includes(user._id)
-        ),
-      })),
-    };
+        return {
+          slotId: slot._id,
+          slotNumber: slot.slotNumber,
+          slotMembers: fullSlotMembers,
+        };
+      })
+    );
+
+    return formattedData;
   },
 });
+

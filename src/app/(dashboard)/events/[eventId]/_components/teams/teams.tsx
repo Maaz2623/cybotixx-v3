@@ -25,34 +25,28 @@ const Teams = ({ eventId }: { eventId: string }) => {
   const { data } = useGetFullSlots({ eventId: eventId as Id<"events"> });
   const { data: event } = useGetEventById({ eventId: eventId as Id<"events"> });
 
+  
   if (!event) return;
-
+  
   if (!data) return;
-
-
-  const slotMembers = data.slots
-    .filter((slot) => slot.members)
-    .flatMap((slot) => slot.members);
     
-
-  const formattedSlotMembers: Member[] = slotMembers
-    .filter(
-      (slotMember): slotMember is NonNullable<typeof slotMember> =>
-        slotMember !== null && slotMember !== undefined
-    ) // Type guard to exclude null/undefined
-    .map((slotMember, index) => ({
-      convex_user_id: slotMember._id as Id<"users">,
-      fullName: slotMember.fullName as string,
-      clerkImageUrl: slotMember.clerkImageUrl as string,
-      roleType: slotMember.roleType as Member["roleType"],
+  const formattedSlotMembers: Member[] = data.flatMap((slot) => {
+    if(!slot) return [];
+    return slot.slotMembers.map((member, index) => ({
+      convex_user_id: member?._id as Id<"users">,
+      clerkImageUrl: member?.clerkImageUrl as string,
+      fullName: member?.fullName as string,
+      roleType: member?.roleType as Member["roleType"],
       index,
-    }));
+    }))
+  })
+
 
   return (
     <div className="min-h-screen border w-full">
       <div className="flex justify-center items-center w-full">
         <h1 className="text-xl md:text-2xl p-5 font-semibold flex items-center gap-2 justify-center">
-          <p>{data.slots.length} Slot(s) full</p>
+          <p>{data.length} Slot(s) full</p>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -66,21 +60,20 @@ const Teams = ({ eventId }: { eventId: string }) => {
         </h1>
       </div>
       <div className="border flex flex-wrap justify-center items-start gap-x-4 p-4 gap-y-6 md:p-14">
-        {data.slots.map((slot) => {
-          const isFull = slotMembers.length >= event.eventTeamMaxMembers;
+        {data.map(({slotNumber, slotId, slotMembers}) => {
 
           return (
-            <Dialog key={slot.slotId}>
+            <Dialog key={slotId}>
               <DialogTrigger asChild>
                 <Button className="border-primary border text-white rounded-md bg-primary/50 w-20 h-8 flex justify-center text-xs md:text-sm items-center">
-                  {isFull}
+                  Slot {slotNumber}
                 </Button>
               </DialogTrigger>
               <DialogContent className="w-[90%] rounded-md">
                 <DialogHeader>
                   <DialogTitle className="flex w-full items-center justify-center gap-2">
                     <>
-                      <p>Slot {slot.slotNumber}</p>
+                      <p>Slot {slotNumber}</p>
                       <p className="text-gray-400">
                         ( {slotMembers.length}/{event.eventTeamMaxMembers} )
                       </p>
