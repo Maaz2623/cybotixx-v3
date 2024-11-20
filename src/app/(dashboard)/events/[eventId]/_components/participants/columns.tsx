@@ -75,6 +75,9 @@ const ActionsCell = ({ convex_user_id }: { convex_user_id: Id<"users"> }) => {
         onSuccess() {
           toast.success(`Winner Announced`);
         },
+        onError() {
+          toast.error("Some Error Occured");
+        },
       }
     );
   };

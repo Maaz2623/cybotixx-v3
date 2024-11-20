@@ -70,6 +70,10 @@ const EventsPage = () => {
           toast.success("Event Created");
           router.push(`/events/${data}`);
         },
+        onError(){
+          setName("")
+          toast.error("Some Error Occured")
+        }
       }
     );
   };

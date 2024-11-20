@@ -75,6 +75,9 @@ const EventIdPage = () => {
         onSuccess: () => {
           toast.success("Participation Successful");
         },
+        onError() {
+          toast.error("Some Error Occured");
+        },
       }
     );
   };

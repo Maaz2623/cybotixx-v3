@@ -90,6 +90,9 @@ const TeamSlots = () => {
           }));
           setOpenParentDialog(false);
         },
+        onError() {
+          toast.error("Some Error Occured");
+        },
       }
     );
   };
