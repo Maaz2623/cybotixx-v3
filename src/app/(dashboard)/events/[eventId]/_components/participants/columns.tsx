@@ -151,9 +151,9 @@ export const columns: ColumnDef<Member>[] = [
         <Image
           src={row.original.clerkImageUrl}
           alt="image"
-          width={50}
-          height={50}
-          className="border size-8 md:size-10 aspect-square rounded-full"
+          width={500}
+          height={500}
+          className="border size-8 md:size-12 aspect-square rounded-full"
         />
       );
     },

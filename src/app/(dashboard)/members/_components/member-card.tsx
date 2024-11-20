@@ -35,9 +35,9 @@ const MemberCard = ({ convex_user_id }: { convex_user_id: Id<"users"> }) => {
         <Image
           src={data.clerkImageUrl}
           alt="profile_pic"
-          width={50}
-          height={50}
-          className="rounded-full"
+          width={500}
+          height={500}
+          className="rounded-full size-14 md:size-20"
         />
         <span className="font-light text-xs md:text-sm">
           {data.roleType === "SUPER_ADMIN" && (
