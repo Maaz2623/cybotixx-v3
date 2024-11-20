@@ -4,14 +4,28 @@ import { useGetUserByClerkId } from "@/features/users/api/use-get-user";
 import { useAuth } from "@clerk/nextjs";
 import ProfileForm from "./_components/profile-form";
 import { AnimatePresence, motion } from "framer-motion";
+import { LoaderIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 const ProfilePage = () => {
   const { userId } = useAuth();
 
-  const { data } = useGetUserByClerkId({
-    clerkId: userId as string,
-  });
+  const router = useRouter();
 
-  if (!data) return;
+  const { data: currentUser, isLoading: currentUserLoading } =
+    useGetUserByClerkId({
+      clerkId: userId as string,
+    });
+
+  if (!currentUserLoading)
+    return (
+      <div className="flex justify-center items-center h-40">
+        <LoaderIcon className="text-blue-500 size-8 animate-spin" />
+      </div>
+    );
+
+  if (!currentUser) {
+    return router.push("/onboarding");
+  }
 
   return (
     <AnimatePresence mode="wait">
@@ -23,15 +37,15 @@ const ProfilePage = () => {
       >
         <div className="w-full flex justify-center items-center ">
           <ProfileForm
-            fullName={data.fullName}
-            registerNumber={data.registerNumber}
-            courseName={data.courseName}
-            courseYear={data.courseYear}
-            phoneNumber={data.phoneNumber}
-            clerkId={data.clerkId as string}
-            clerkImageUrl={data.clerkImageUrl}
-            prizesWon={data.prizesWon}
-            participations={data.participations}
+            fullName={currentUser.fullName}
+            registerNumber={currentUser.registerNumber}
+            courseName={currentUser.courseName}
+            courseYear={currentUser.courseYear}
+            phoneNumber={currentUser.phoneNumber}
+            clerkId={currentUser.clerkId as string}
+            clerkImageUrl={currentUser.clerkImageUrl}
+            prizesWon={currentUser.prizesWon}
+            participations={currentUser.participations}
           />
         </div>
       </motion.div>
