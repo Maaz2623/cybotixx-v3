@@ -33,7 +33,7 @@ const MembersPage = () => {
   }
 
   return (
-    <div className="w-full p-5 mt-10 max-h-screen">
+    <div className="w-full p-5 mt-10">
       {membersLoading ? (
         <div className="w-full h-20 flex justify-center items-center">
           <LoaderIcon className="text-blue-500 size-10 animate-spin" />
