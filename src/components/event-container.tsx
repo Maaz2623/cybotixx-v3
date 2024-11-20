@@ -1,21 +1,13 @@
 import { useGetEvents } from "@/features/events/api/use-get-events";
 import { cn } from "@/lib/utils";
-import { LoaderIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 const EventContainer = () => {
-  const { data: events, isLoading: eventsLoading } = useGetEvents();
+  const { data: events } = useGetEvents();
 
   const router = useRouter();
-
-  if (!eventsLoading)
-    return (
-      <div className="h-40 w-full flex justify-center items-center">
-        <LoaderIcon className="text-blue-500 animate-spin size-10" />
-      </div>
-    );
 
   if (!events) {
     return (

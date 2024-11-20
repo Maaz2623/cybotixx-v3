@@ -36,19 +36,18 @@ const EventsPage = () => {
 
   const router = useRouter();
 
-  const { data: currentUser, isLoading: currentUserLoading } =
-    useGetUserByClerkId({
-      clerkId: userId as string,
-    });
+  const { data: currentUser } = useGetUserByClerkId({
+    clerkId: userId as string,
+  });
 
   const { mutate } = useCreateEvent();
 
-  if (!currentUserLoading)
-    return (
-      <div className="flex justify-center items-center h-40">
-        <LoaderIcon className="text-blue-500 size-8 animate-spin" />
-      </div>
-    );
+  // if (!currentUserLoading)
+  //   return (
+  //     <div className="flex justify-center items-center h-40">
+  //       <LoaderIcon className="text-blue-500 size-8 animate-spin" />
+  //     </div>
+  //   );
 
   if (!currentUser) {
     return router.push("/onboarding");
@@ -70,10 +69,10 @@ const EventsPage = () => {
           toast.success("Event Created");
           router.push(`/events/${data}`);
         },
-        onError(){
-          setName("")
-          toast.error("Some Error Occured")
-        }
+        onError() {
+          setName("");
+          toast.error("Some Error Occured");
+        },
       }
     );
   };

@@ -4,25 +4,15 @@ import { useGetUserByClerkId } from "@/features/users/api/use-get-user";
 import { useAuth } from "@clerk/nextjs";
 import ProfileForm from "./_components/profile-form";
 import { AnimatePresence, motion } from "framer-motion";
-import { LoaderIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 const ProfilePage = () => {
   const { userId } = useAuth();
 
   const router = useRouter();
 
-  const { data: currentUser, isLoading: currentUserLoading } =
-    useGetUserByClerkId({
-      clerkId: userId as string,
-    });
-
-  if (!currentUserLoading)
-    return (
-      <div className="flex justify-center items-center h-40">
-        <LoaderIcon className="text-blue-500 size-8 animate-spin" />
-      </div>
-    );
-
+  const { data: currentUser } = useGetUserByClerkId({
+    clerkId: userId as string,
+  });
   if (!currentUser) {
     return router.push("/onboarding");
   }

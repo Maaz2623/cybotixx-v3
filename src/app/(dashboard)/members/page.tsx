@@ -13,10 +13,11 @@ const MembersPage = () => {
   const { data: members, isLoading: membersLoading } = useGetMembers();
   const router = useRouter();
 
-  const { data: currentUser, isLoading: currentUserLoading } =
+  const { data: currentUser } =
     useGetUserByClerkId({
       clerkId: userId as string,
     });
+    
   if (!members) return;
 
   const formattedMembers: Member[] = members.map((member) => ({
@@ -26,12 +27,6 @@ const MembersPage = () => {
     roleType: member.roleType as Member["roleType"],
   }));
 
-  if (!currentUserLoading)
-    return (
-      <div className="flex justify-center items-center h-40">
-        <LoaderIcon className="text-blue-500 size-8 animate-spin" />
-      </div>
-    );
 
   if (!currentUser) {
     return router.push("/onboarding");
