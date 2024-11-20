@@ -178,7 +178,7 @@ const TeamSlots = () => {
                     <DialogHeader>
                       <DialogTitle>Join Slot {slot.slotNumber}</DialogTitle>
                       <DialogDescription>
-                        This action cannot be undone.
+                        This action cannot be undone. Decide you partner and slot before joining.
                       </DialogDescription>
                     </DialogHeader>
                     <div className="w-full space-y-3 overflow-auto">
