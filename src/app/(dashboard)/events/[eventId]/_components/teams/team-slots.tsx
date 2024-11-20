@@ -178,7 +178,7 @@ const TeamSlots = () => {
                     <DialogHeader>
                       <DialogTitle>Join Slot {slot.slotNumber}</DialogTitle>
                       <DialogDescription>
-                        This action cannot be undone. Decide you partner and slot before joining.
+                        This action cannot be undone. Decide you partner and slot number before joining.
                       </DialogDescription>
                     </DialogHeader>
                     <div className="w-full space-y-3 overflow-auto">
@@ -188,7 +188,7 @@ const TeamSlots = () => {
                           disabled={loading || isSlotFull}
                           className="border-primary bg-primary/50 text-white"
                           onClick={() =>
-                            handleJoin({ slotNumber: slot.slotNumber })
+                            handleJoin({ slotNumber: slot.slotNumber } )
                           }
                         >
                           Join
