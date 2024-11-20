@@ -42,6 +42,16 @@ export const joinSlot = mutation({
 
     const updatedSlotMembers = [...currentSlotMembers, args.memberId];
 
+    const member = await ctx.db.get(args.memberId);
+
+    if (!member) return;
+
+    const updatedMemberParticipation = member.participations + 1;
+
+    await ctx.db.patch(member._id, {
+      participations: updatedMemberParticipation,
+    });
+
     await ctx.db.insert("participants", {
       memberId: args.memberId,
       eventId: args.eventId,
@@ -51,7 +61,7 @@ export const joinSlot = mutation({
       slotMembers: updatedSlotMembers,
     });
 
-    return slot._id;
+    return slot.slotNumber;
   },
 });
 

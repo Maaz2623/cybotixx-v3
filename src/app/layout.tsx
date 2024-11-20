@@ -20,7 +20,8 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "Cybotixx",
-  description: "Join events",
+  description:
+    "Discover a dynamic platform where ideas, creativity, and innovation converge. Cybotixx offers a vibrant community experience, connecting you to insights, discussions, and inspirations like never before.",
 };
 
 export default function RootLayout({
@@ -38,6 +39,9 @@ export default function RootLayout({
       }}
     >
       <html lang="en">
+        <head>
+          <link rel="icon" href="/favicon.png" sizes="any" />
+        </head>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen`}
         >

@@ -25,7 +25,6 @@ const MemberCard = ({ convex_user_id }: { convex_user_id: Id<"users"> }) => {
 
   if (!data) return null;
 
-
   return (
     <DialogContent className="rounded-lg h-fit border border-white/20 w-[80%] aspect-square">
       <h1 className="w-full text-center text-2xl md:text-4xl font-semibold">

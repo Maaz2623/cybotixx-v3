@@ -43,7 +43,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="">
+    <div className="mb-40">
       <div className="w-full py-2">
         <Input
           placeholder="Search members..."

@@ -6,19 +6,20 @@ import { useGetMembers } from "@/features/members/api/use-get-members";
 import { LoaderIcon } from "lucide-react";
 import { useGetUserByClerkId } from "@/features/users/api/use-get-user";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 
 const MembersPage = () => {
   const { userId } = useAuth();
+  const { user } = useUser();
   const { data: members, isLoading: membersLoading } = useGetMembers();
   const router = useRouter();
 
-  const { data: currentUser } =
-    useGetUserByClerkId({
-      clerkId: userId as string,
-    });
-    
+  const { data: currentUser } = useGetUserByClerkId({
+    clerkId: userId as string,
+  });
+
   if (!members) return;
+  if (!user) return;
 
   const formattedMembers: Member[] = members.map((member) => ({
     convex_user_id: member._id as string,
@@ -26,7 +27,6 @@ const MembersPage = () => {
     clerkImageUrl: member.clerkImageUrl,
     roleType: member.roleType as Member["roleType"],
   }));
-
 
   if (!currentUser) {
     return router.push("/onboarding");

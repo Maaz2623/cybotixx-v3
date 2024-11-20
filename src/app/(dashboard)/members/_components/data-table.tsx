@@ -43,18 +43,15 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div>
+    <div className="mb-40">
       <div className="w-full py-2">
         <Input
           placeholder="Search members..."
           value={
-            (table.getColumn("fullName")?.getFilterValue() as string) ??
-            ""
+            (table.getColumn("fullName")?.getFilterValue() as string) ?? ""
           }
           onChange={(event) =>
-            table
-              .getColumn("fullName")
-              ?.setFilterValue(event.target.value)
+            table.getColumn("fullName")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
