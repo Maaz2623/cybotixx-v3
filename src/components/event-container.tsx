@@ -6,16 +6,24 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 const EventContainer = () => {
-  const { data: events } = useGetEvents();
+  const { data: events, isLoading: eventsLoading } = useGetEvents();
 
   const router = useRouter();
 
-  if (!events)
+  if (!eventsLoading)
     return (
       <div className="h-40 w-full flex justify-center items-center">
         <LoaderIcon className="text-blue-500 animate-spin size-10" />
       </div>
     );
+
+  if (!events) {
+    return (
+      <div className="h-40 w-full flex justify-center items-center">
+        <p className="text-lg">No Events</p>
+      </div>
+    );
+  }
 
   return (
     <div className="md:w-full py-3 space-y-6 px-2 md:p-3 w-[90%]">
