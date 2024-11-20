@@ -1,6 +1,5 @@
 import { useGetEvents } from "@/features/events/api/use-get-events";
 import { cn } from "@/lib/utils";
-import { isAfter, isBefore, isEqual, parse } from "date-fns";
 import { LoaderIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -22,10 +21,6 @@ const EventContainer = () => {
     <div className="md:w-full py-3 space-y-6 px-2 md:p-3 w-[90%]">
       {events.map((event) => {
         const eventDate = event.eventDate; // Assuming format is "dd/MM/yyyy"
-        const currentDate = new Date();
-
-        // Parse the eventDate string into a Date object
-        const eventDateObject = parse(eventDate, "dd/MM/yyyy", new Date());
 
         return (
           <div
@@ -49,15 +44,12 @@ const EventContainer = () => {
                 <p
                   className={cn(
                     "border md:hidden rounded-md py-1 text-xs px-2",
-                    isBefore(eventDateObject, currentDate) &&
-                      "bg-blue-500/50 border-blue-500",
-                    isAfter(eventDateObject, currentDate) &&
-                      "bg-gray-600/50 border-white"
+                    !event.eventComplete && "bg-blue-500/50 border-blue-500",
+                    event.eventComplete && "bg-gray-600/50 border-white"
                   )}
                 >
-                  {isBefore(eventDateObject, currentDate) && "Upcoming"}
-                  {isAfter(eventDateObject, currentDate) && "Completed"}
-                  {isEqual(eventDateObject, currentDate) && "Ongoing"}
+                  {event.eventComplete && "Completed"}
+                  {!event.eventComplete && "Upcoming"}
                 </p>
               </div>
               <p className="text-xs rounded-md border w-fit px-2 py-1 bg-white/10 mt-3">
@@ -66,15 +58,12 @@ const EventContainer = () => {
               <p
                 className={cn(
                   "border hidden md:flex w-fit mt-4 rounded-md py-1 text-xs px-2",
-                  isBefore(eventDateObject, currentDate) &&
-                    "bg-blue-500/50 border-blue-500",
-                  isAfter(eventDateObject, currentDate) &&
-                    "bg-gray-600/50 border-white"
+                  !event.eventComplete && "bg-blue-500/50 border-blue-500",
+                  event.eventComplete && "bg-gray-600/50 border-white"
                 )}
               >
-                {isBefore(eventDateObject, currentDate) && "Upcoming"}
-                {isAfter(eventDateObject, currentDate) && "Completed"}
-                {isEqual(eventDateObject, currentDate) && "Ongoing"}
+                {event.eventComplete && "Completed"}
+                {!event.eventComplete && "Upcoming"}
               </p>
             </div>
           </div>

@@ -31,6 +31,7 @@ export default defineSchema({
     eventType: v.string(),
     eventTeamMaxMembers: v.number(),
     eventRegistrationOpen: v.boolean(),
+    eventComplete: v.boolean(),
   }),
   slots: defineTable({
     slotMembers: v.array(v.id("users")),

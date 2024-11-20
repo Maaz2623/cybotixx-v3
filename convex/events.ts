@@ -17,6 +17,7 @@ export const createEvent = mutation({
       eventType: args.eventType,
       eventTeamMaxMembers: args.eventTeamMaxMembers,
       eventRegistrationOpen: true,
+      eventComplete: false,
     });
 
     Array.from({ length: 100 }, (_, index) =>

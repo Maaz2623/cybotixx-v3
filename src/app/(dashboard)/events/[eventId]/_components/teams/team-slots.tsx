@@ -174,7 +174,9 @@ const TeamSlots = () => {
                   <DialogContent>
                     <DialogHeader>
                       <DialogTitle>Join Slot {slot.slotNumber}</DialogTitle>
-                      <DialogDescription></DialogDescription>
+                      <DialogDescription>
+                        This action cannot be undone.
+                      </DialogDescription>
                     </DialogHeader>
                     <div className="w-full space-y-3 overflow-auto">
                       <DataTable data={membersExistInSlot} columns={columns} />

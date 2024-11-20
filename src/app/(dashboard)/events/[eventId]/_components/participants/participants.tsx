@@ -9,14 +9,7 @@ const Participants = ({ eventId }: { eventId: string }) => {
     eventId: eventId as Id<"events">,
   });
 
-  if (!participants) return <div>Loading...</div>;
-
-  if (participants.length === 0)
-    return (
-      <div className="w-full h-40 flex justify-center">
-        <p>No Participants</p>
-      </div>
-    );
+  if (!participants) return null;
 
   const formattedParticipants: Member[] = participants
     .filter(

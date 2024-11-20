@@ -27,7 +27,6 @@ import { useCreateUser } from "@/features/users/api/use-create-user";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { LoaderIcon } from "lucide-react";
-import Cookies from "js-cookie";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const formSchema = z.object({
@@ -80,15 +79,9 @@ const OnboardingForm = ({ userId }: { userId: string }) => {
           participations: 0,
         },
         {
-          onSuccess(data) {
-            if (data) {
-              Cookies.set("convex_user_id", data, {
-                expires: 7,
-                path: "/",
-              });
-            }
+          onSuccess() {
             toast.success("Created Successfully");
-            router.push("/events");
+            router.replace("/events");
           },
         }
       );

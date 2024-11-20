@@ -11,12 +11,6 @@ const Winners = ({ eventId }: { eventId: string }) => {
 
   if (!winners) return null;
 
-  if (winners.winners.length === 0)
-    return (
-      <div className="h-40 flex justify-center items-center">
-        <p>Winners not accounced yet</p>
-      </div>
-    );
 
   const formattedMembers: Winner[] = winners.winners
     .filter(

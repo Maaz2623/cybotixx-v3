@@ -21,7 +21,7 @@ const ProfilePage = () => {
         exit={{ opacity: 0, y: -50 }}
         transition={{ duration: 0.2 }}
       >
-        <div className="w-full flex justify-center items-center">
+        <div className="w-full flex justify-center items-center ">
           <ProfileForm
             fullName={data.fullName}
             registerNumber={data.registerNumber}
