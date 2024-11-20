@@ -9,7 +9,7 @@ type RequestType = {
   slotNumber: number;
 };
 
-type ResponseType = Id<"slots"> | null;
+type ResponseType = number | null;
 
 type Options = {
   onSuccess?: (data: ResponseType) => void;
