@@ -101,7 +101,7 @@ const TeamSlots = () => {
     <Dialog open={openParentDialog} onOpenChange={setOpenParentDialog}>
       <DialogTrigger asChild>
         <Button
-          disabled={!!participant}
+          disabled={!!participant || !event.eventRegistrationOpen}
           className={cn(
             "h-8 text-xs md:text-sm w-[80px] md:w-[100px] bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white",
             !!participant && "hidden"
@@ -178,7 +178,8 @@ const TeamSlots = () => {
                     <DialogHeader>
                       <DialogTitle>Join Slot {slot.slotNumber}</DialogTitle>
                       <DialogDescription>
-                        This action cannot be undone. Decide you partner and slot number before joining.
+                        This action cannot be undone. Decide you partner and
+                        slot number before joining.
                       </DialogDescription>
                     </DialogHeader>
                     <div className="w-full space-y-3 overflow-auto">
@@ -188,7 +189,7 @@ const TeamSlots = () => {
                           disabled={loading || isSlotFull}
                           className="border-primary bg-primary/50 text-white"
                           onClick={() =>
-                            handleJoin({ slotNumber: slot.slotNumber } )
+                            handleJoin({ slotNumber: slot.slotNumber })
                           }
                         >
                           Join
