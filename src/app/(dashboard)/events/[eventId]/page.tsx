@@ -14,7 +14,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useGetEventById } from "@/features/events/api/use-get-event-by-id";
-import { LoaderIcon, PlusCircleIcon, UserIcon, UsersIcon } from "lucide-react";
+import {
+  CheckIcon,
+  LoaderIcon,
+  PlusCircleIcon,
+  UserIcon,
+  UsersIcon,
+} from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
 import Image from "next/image";
@@ -118,23 +124,28 @@ const EventIdPage = () => {
   return (
     <div className="w-full p-4 space-y-4 md:flex flex-col justify-center items-center">
       {(currentUser?.roleType === "SUPER_ADMIN" ||
-        currentUser?.roleType === "ADMIN") && (
+        currentUser?.roleType === "ADMIN" ||
+        currentUser.roleType === "MODERATOR") && (
         <div className="flex w-full items-center justify-end">
           <Dialog>
             <div className="flex gap-3">
-              <Button
-                onClick={() => {
-                  setLoading(true);
-                  router.push(`/print/${eventId}`);
-                }}
-                className="bg-primary/50 border w-[80px] text-xs border-primary text-white"
-              >
-                {loading ? (
-                  <LoaderIcon className="size-4 animate-spin text-white" />
-                ) : (
-                  "Print"
-                )}
-              </Button>
+              {(currentUser.roleType === "SUPER_ADMIN" ||
+                currentUser.roleType === "ADMIN" ||
+                currentUser.roleType === "MODERATOR") && (
+                <Button
+                  onClick={() => {
+                    setLoading(true);
+                    router.push(`/print/${eventId}`);
+                  }}
+                  className="bg-primary/50 border w-[80px] text-xs border-primary text-white"
+                >
+                  {loading ? (
+                    <LoaderIcon className="size-4 animate-spin text-white" />
+                  ) : (
+                    "Print"
+                  )}
+                </Button>
+              )}
               <DialogTrigger asChild>
                 <Button
                   type="submit"
@@ -271,7 +282,7 @@ const EventIdPage = () => {
               }
               className="h-8 text-xs md:text-sm w-[80px] md:w-[100px] bg-primary/50 hover:bg-primary/70 border-blue-600 border text-white"
             >
-              {!participant && "Participate"}
+              {!participant ? "Participate" : <CheckIcon />}
             </Button>
           )}
           {event.eventType === "team" && (
