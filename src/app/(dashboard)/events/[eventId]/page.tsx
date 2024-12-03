@@ -269,7 +269,7 @@ const EventIdPage = () => {
             ) : (
               <p className="flex text-sm w-full text-gray-400 justify-start">
                 <UserIcon className="size-4" />
-                Team
+                Individual
               </p>
             )}
           </div>
